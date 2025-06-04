@@ -16,7 +16,7 @@
     <meta property="og:type" content="website">
     
     <!-- External Dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
@@ -32,7 +32,7 @@
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
         .container {
@@ -42,23 +42,24 @@
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             overflow: hidden;
+            position: relative;
         }
 
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px 30px;
+            padding: 30px 20px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             margin-bottom: 10px;
             font-weight: 700;
         }
 
         .header p {
-            font-size: 1.2em;
+            font-size: 1.1em;
             opacity: 0.9;
         }
 
@@ -79,14 +80,55 @@
         }
 
         .content {
-            padding: 40px 30px;
+            padding: 30px 20px;
+        }
+
+        /* Personal Info Section */
+        .personal-info {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .personal-info h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border: 2px solid #f0f0f0;
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px;
             background: #fafafa;
             transition: all 0.3s ease;
             display: none;
@@ -102,36 +144,48 @@
         }
 
         .section-title {
-            font-size: 1.8em;
+            font-size: 1.6em;
             font-weight: 700;
             color: #667eea;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .section-number {
             background: #667eea;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 15px;
             font-weight: bold;
+            font-size: 0.9em;
+            flex-shrink: 0;
         }
 
         .section-description {
             color: #666;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-style: italic;
+            font-size: 0.95em;
+        }
+
+        .section-indicator {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 600;
         }
 
         .question {
-            margin-bottom: 25px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
             background: white;
             border-radius: 10px;
             border-left: 4px solid #667eea;
@@ -139,20 +193,21 @@
 
         .question-text {
             font-weight: 600;
-            font-size: 1.1em;
-            margin-bottom: 15px;
+            font-size: 1em;
+            margin-bottom: 12px;
             color: #333;
+            line-height: 1.5;
         }
 
         .options {
             display: grid;
-            gap: 10px;
+            gap: 8px;
         }
 
         .option {
             display: flex;
             align-items: flex-start;
-            padding: 12px;
+            padding: 10px;
             background: #f9f9f9;
             border-radius: 8px;
             cursor: pointer;
@@ -171,33 +226,38 @@
         }
 
         .option input[type="radio"] {
-            margin-right: 12px;
+            margin-right: 10px;
             margin-top: 3px;
+            flex-shrink: 0;
         }
 
         .option-text {
             flex: 1;
-            line-height: 1.5;
+            line-height: 1.4;
+            font-size: 0.95em;
         }
 
         .navigation {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 30px 0;
+            margin: 20px 0;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .nav-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 1em;
+            padding: 10px 25px;
+            font-size: 0.95em;
             font-weight: 600;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            min-width: 100px;
         }
 
         .nav-btn:hover {
@@ -216,14 +276,14 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2em;
+            padding: 15px 30px;
+            font-size: 1.1em;
             font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: none;
-            margin: 40px auto;
+            margin: 30px auto;
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
@@ -234,45 +294,45 @@
 
         .results {
             display: none;
-            margin-top: 40px;
-            padding: 30px;
+            margin-top: 30px;
+            padding: 25px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 15px;
             color: white;
         }
 
         .results h2 {
-            font-size: 2em;
+            font-size: 1.8em;
             margin-bottom: 20px;
             text-align: center;
         }
 
         .overall-score {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .overall-score .score {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
             display: block;
         }
 
         .overall-score .label {
-            font-size: 1.2em;
+            font-size: 1.1em;
             opacity: 0.9;
         }
 
         .score-breakdown {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .score-item {
             background: rgba(255,255,255,0.2);
-            padding: 15px;
+            padding: 12px;
             border-radius: 10px;
             backdrop-filter: blur(10px);
         }
@@ -280,11 +340,12 @@
         .score-item-title {
             font-weight: 600;
             margin-bottom: 5px;
-            font-size: 0.95em;
+            font-size: 0.9em;
+            line-height: 1.3;
         }
 
         .score-item-score {
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: bold;
         }
 
@@ -293,11 +354,12 @@
             padding: 20px;
             border-radius: 10px;
             backdrop-filter: blur(10px);
+            margin-bottom: 20px;
         }
 
         .interpretation h3 {
             margin-bottom: 15px;
-            font-size: 1.4em;
+            font-size: 1.3em;
         }
 
         .progress-bar {
@@ -305,7 +367,7 @@
             height: 8px;
             background: rgba(255,255,255,0.3);
             border-radius: 4px;
-            margin: 10px 0;
+            margin: 8px 0;
             overflow: hidden;
         }
 
@@ -327,29 +389,29 @@
         .radar-chart-container {
             background: rgba(255,255,255,0.95);
             border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
+            padding: 20px;
+            margin: 25px 0;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .radar-chart-container h3 {
             color: #333;
-            margin-bottom: 20px;
-            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-size: 1.3em;
         }
 
         .chart-canvas {
             max-width: 100%;
-            height: 500px;
+            height: 400px;
             margin: 0 auto;
         }
 
         .chart-controls {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -357,13 +419,14 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            font-size: 0.9em;
         }
 
         .chart-download-btn:hover {
@@ -372,22 +435,34 @@
         }
 
         .download-section {
-            margin-top: 30px;
+            margin-top: 25px;
             text-align: center;
+        }
+
+        .download-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
         }
 
         .download-btn {
             background: rgba(255,255,255,0.2);
             color: white;
             border: 2px solid rgba(255,255,255,0.3);
-            padding: 12px 25px;
-            margin: 0 10px;
+            padding: 10px 15px;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            font-size: 0.9em;
         }
 
         .download-btn:hover {
@@ -396,33 +471,68 @@
             transform: translateY(-2px);
         }
 
-        .section-indicator {
+        .save-status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
             text-align: center;
-            margin-bottom: 20px;
-            color: #666;
-            font-size: 0.9em;
+            display: none;
         }
 
+        .save-status.success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #2e7d32;
+            border: 1px solid #4caf50;
+        }
+
+        .save-status.error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
             .container {
-                margin: 10px;
+                margin: 5px;
                 border-radius: 15px;
             }
             
             .header {
-                padding: 30px 20px;
+                padding: 20px 15px;
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 1.8em;
+            }
+            
+            .header p {
+                font-size: 1em;
             }
             
             .content {
-                padding: 30px 20px;
+                padding: 20px 15px;
             }
             
             .section {
-                padding: 20px;
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.4em;
+            }
+            
+            .section-number {
+                width: 30px;
+                height: 30px;
+                margin-right: 10px;
+                font-size: 0.8em;
             }
             
             .score-breakdown {
@@ -431,41 +541,89 @@
 
             .navigation {
                 flex-direction: column;
-                gap: 15px;
+                gap: 10px;
+            }
+
+            .nav-btn {
+                width: 100%;
+                max-width: 200px;
             }
 
             .radar-chart-container {
-                padding: 20px 15px;
-                margin: 20px 0;
+                padding: 15px 10px;
+                margin: 15px 0;
             }
 
             .chart-canvas {
-                height: 350px;
+                height: 300px;
             }
 
             .chart-controls {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
 
             .chart-download-btn {
                 width: 100%;
-                padding: 12px 20px;
+                max-width: 250px;
+                padding: 10px 15px;
             }
 
-            .download-section div {
+            .download-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 8px;
             }
 
             .download-btn {
                 width: 100%;
-                padding: 12px 20px;
+                padding: 12px 15px;
+            }
+
+            .question-text {
+                font-size: 0.95em;
+            }
+
+            .option-text {
+                font-size: 0.9em;
+            }
+
+            .results {
+                padding: 20px 15px;
+            }
+
+            .results h2 {
+                font-size: 1.6em;
+            }
+
+            .overall-score .score {
+                font-size: 2.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+            
+            .section-title {
+                font-size: 1.2em;
+            }
+            
+            .chart-canvas {
+                height: 250px;
+            }
+            
+            .results h2 {
+                font-size: 1.4em;
+            }
+            
+            .overall-score .score {
+                font-size: 2em;
             }
         }
 
         @media print {
-            .header, .navigation, .download-section {
+            .header, .navigation, .download-section, .chart-controls {
                 display: none !important;
             }
             
@@ -492,6 +650,21 @@
                 border: 1px solid #ddd !important;
             }
         }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -507,8 +680,28 @@
         <div class="content">
             <form id="lifeAssessmentForm">
                 
+                <!-- Personal Information Section -->
+                <div class="personal-info active" id="personalInfoSection">
+                    <h3>📝 ข้อมูลส่วนบุคคล</h3>
+                    <div class="form-group">
+                        <label for="fullName">ชื่อ-นามสกุล *</label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="กรุณากรอกชื่อ-นามสกุล">
+                    </div>
+                    <div class="form-group">
+                        <label for="organization">หน่วยงาน/บริษัท</label>
+                        <input type="text" id="organization" name="organization" placeholder="กรุณากรอกหน่วยงานหรือบริษัท (ไม่บังคับ)">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">อีเมล์ *</label>
+                        <input type="email" id="email" name="email" required placeholder="กรุณากรอกอีเมล์">
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button type="button" class="nav-btn" onclick="startAssessment()">เริ่มประเมิน</button>
+                    </div>
+                </div>
+                
                 <!-- Section 1: Health & Fitness -->
-                <div class="section active" data-section="1">
+                <div class="section" data-section="1">
                     <div class="section-indicator">ด้านที่ 1 จาก 12</div>
                     <div class="section-title">
                         <div class="section-number">1</div>
@@ -1370,10 +1563,10 @@
                         <canvas id="radarChart" class="chart-canvas"></canvas>
                     </div>
                     <div class="chart-controls">
-                        <button class="chart-download-btn" onclick="downloadChartImage()">📸 ดาวน์โหลดกราฟเป็นรูปภาพ</button>
-                        <button class="chart-download-btn" onclick="downloadDetailedPDF()">📊 ดาวน์โหลด PDF พร้อมกราฟ</button>
+                        <button class="chart-download-btn" onclick="downloadChartImage()">📸 ดาวน์โหลดกราฟ</button>
+                        <button class="chart-download-btn" onclick="downloadDetailedPDF()">📊 รายงาน PDF</button>
                     </div>
-                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
+                    <p style="margin-top: 15px; color: #666; font-size: 0.9em; text-align: center;">
                         ☸️ Wheel of Life แสดงความสมดุลใน 12 ด้านของชีวิต โดยแกนกลางคือ 0 คะแนน และขอบนอกคือ 25 คะแนน<br>
                         <span style="color: #4CAF50;">●</span> สีเขียว: ยอดเยี่ยม (23-25) | 
                         <span style="color: #8BC34A;">●</span> สีเขียวอ่อน: ดี (18-22) | 
@@ -1388,29 +1581,67 @@
                 
                 <div class="download-section">
                     <h3>💾 ดาวน์โหลดผลลัพธ์</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
-                        <button class="download-btn" onclick="downloadJSON()">📄 ดาวน์โหลด JSON</button>
-                        <button class="download-btn" onclick="downloadPDF()">📑 PDF สรุปอย่างย่อ</button>
-                        <button class="download-btn" onclick="downloadDetailedPDF()">📊 PDF รายละเอียดพร้อมกราฟ</button>
-                        <button class="download-btn" onclick="downloadChartImage()">📸 ภาพกราฟ PNG</button>
-                        <button class="download-btn" onclick="printResults()">🖨️ พิมพ์ผลลัพธ์</button>
+                    <div class="download-grid">
+                        <button class="download-btn" onclick="downloadJSON()">📄 JSON</button>
+                        <button class="download-btn" onclick="downloadPDF()">📑 PDF สรุป</button>
+                        <button class="download-btn" onclick="downloadDetailedPDF()">📊 PDF เต็ม</button>
+                        <button class="download-btn" onclick="downloadChartImage()">📸 PNG</button>
+                        <button class="download-btn" onclick="printResults()">🖨️ พิมพ์</button>
                     </div>
                     <p style="color: rgba(255,255,255,0.8); font-size: 0.9em; text-align: center; margin-top: 15px;">
-                        💡 แนะนำ: ใช้ "PDF รายละเอียดพร้อมกราฟ" สำหรับรายงานที่สมบูรณ์ที่สุด
+                        💡 แนะนำ: ใช้ "PDF เต็ม" สำหรับรายงานที่สมบูรณ์ที่สุด
                     </p>
                 </div>
                 
                 <div class="low-scores" id="lowScores">
                     <!-- Low scoring areas will be highlighted here -->
                 </div>
+
+                <div class="save-status" id="saveStatus">
+                    <!-- Save status will be shown here -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        let currentSection = 1;
+        let currentSection = 0;
         const totalSections = 12;
-        let currentResults = null; // เก็บผลลัพธ์ปัจจุบันสำหรับดาวน์โหลด
+        let currentResults = null;
+
+        // Personal Info Validation
+        function validatePersonalInfo() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!fullName) {
+                alert('กรุณากรอกชื่อ-นามสกุล');
+                return false;
+            }
+            
+            if (!email) {
+                alert('กรุณากรอกอีเมล์');
+                return false;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('กรุณากรอกอีเมล์ให้ถูกต้อง');
+                return false;
+            }
+            
+            return true;
+        }
+
+        function startAssessment() {
+            if (!validatePersonalInfo()) {
+                return;
+            }
+            
+            currentSection = 1;
+            document.getElementById('personalInfoSection').classList.remove('active');
+            showSection(currentSection);
+        }
 
         // Navigation functionality
         function showSection(sectionNumber) {
@@ -1425,7 +1656,7 @@
             }
             
             // Update progress bar
-            const progress = (sectionNumber / totalSections) * 100;
+            const progress = ((sectionNumber) / totalSections) * 100;
             document.getElementById('headerProgress').style.width = progress + '%';
             
             // Update navigation buttons
@@ -1464,8 +1695,8 @@
                 });
             });
 
-            // Initialize first section
-            showSection(1);
+            // Initialize personal info section
+            document.getElementById('personalInfoSection').classList.add('active');
         });
 
         function calculateResults() {
@@ -1518,12 +1749,22 @@
             }
 
             const averageScore = totalScore / validSectionCount;
-            displayResults(averageScore, scores, validSectionCount);
+            
+            // Get personal info
+            const personalInfo = {
+                fullName: document.getElementById('fullName').value.trim(),
+                organization: document.getElementById('organization').value.trim(),
+                email: document.getElementById('email').value.trim()
+            };
+
+            displayResults(averageScore, scores, validSectionCount, personalInfo);
+            saveToGoogleSheets(personalInfo, scores, averageScore);
         }
 
-        function displayResults(averageScore, scores, validSectionCount) {
+        function displayResults(averageScore, scores, validSectionCount, personalInfo) {
             // เก็บผลลัพธ์สำหรับดาวน์โหลด
             currentResults = {
+                personalInfo: personalInfo,
                 averageScore: averageScore,
                 scores: scores,
                 validSectionCount: validSectionCount,
@@ -1575,6 +1816,10 @@
 
             interpretation.innerHTML = `
                 <h3 style="color: ${color}">การวิเคราะห์ผล</h3>
+                <p><strong>ผู้ประเมิน:</strong> ${personalInfo.fullName}</p>
+                ${personalInfo.organization ? `<p><strong>หน่วยงาน:</strong> ${personalInfo.organization}</p>` : ''}
+                <p><strong>วันที่ประเมิน:</strong> ${new Date().toLocaleDateString('th-TH')}</p>
+                <br>
                 <p>${interpretationText}</p>
                 <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
                     <h4>เกณฑ์การให้คะแนน:</h4>
@@ -1701,14 +1946,14 @@
             orderedSections.forEach(sectionName => {
                 const score = scores.find(s => s.name === sectionName);
                 if (score) {
-                    labels.push(sectionName);
+                    labels.push(sectionName.length > 25 ? sectionName.substring(0, 22) + '...' : sectionName);
                     data.push(score.score);
                     
                     // กำหนดสีตามคะแนน
-                    if (score.score >= 23) backgroundColors.push('rgba(76, 175, 80, 0.6)'); // เขียว - ดีเยี่ยม
-                    else if (score.score >= 18) backgroundColors.push('rgba(139, 195, 74, 0.6)'); // เขียวอ่อน - ดี
-                    else if (score.score >= 11) backgroundColors.push('rgba(255, 152, 0, 0.6)'); // ส้ม - ปานกลาง
-                    else backgroundColors.push('rgba(244, 67, 54, 0.6)'); // แดง - ต้องปรับปรุง
+                    if (score.score >= 23) backgroundColors.push('rgba(76, 175, 80, 0.6)');
+                    else if (score.score >= 18) backgroundColors.push('rgba(139, 195, 74, 0.6)');
+                    else if (score.score >= 11) backgroundColors.push('rgba(255, 152, 0, 0.6)');
+                    else backgroundColors.push('rgba(244, 67, 54, 0.6)');
                 }
             });
             
@@ -1727,8 +1972,8 @@
                         pointBorderWidth: 2,
                         pointHoverBackgroundColor: '#fff',
                         pointHoverBorderColor: 'rgba(102, 126, 234, 1)',
-                        pointRadius: 8,
-                        pointHoverRadius: 10,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
                         tension: 0.1
                     }]
                 },
@@ -1741,7 +1986,7 @@
                             labels: {
                                 color: '#333',
                                 font: {
-                                    size: 16,
+                                    size: 14,
                                     weight: 'bold'
                                 },
                                 padding: 20
@@ -1780,12 +2025,8 @@
                             pointLabels: {
                                 color: '#333',
                                 font: {
-                                    size: 12,
+                                    size: window.innerWidth < 768 ? 10 : 12,
                                     weight: '600'
-                                },
-                                callback: function(label) {
-                                    // ย่อชื่อถ้ายาวเกินไป
-                                    return label.length > 25 ? label.substring(0, 22) + '...' : label;
                                 }
                             },
                             ticks: {
@@ -1794,7 +2035,7 @@
                                 backdropColor: 'rgba(255, 255, 255, 0.9)',
                                 backdropPadding: 4,
                                 font: {
-                                    size: 11,
+                                    size: window.innerWidth < 768 ? 9 : 11,
                                     weight: '500'
                                 },
                                 stepSize: 5,
@@ -1819,6 +2060,62 @@
             });
         }
 
+        // Google Sheets Integration
+        async function saveToGoogleSheets(personalInfo, scores, averageScore) {
+            // แสดงสถานะการบันทึก
+            const statusElement = document.getElementById('saveStatus');
+            statusElement.innerHTML = '<div class="loading"></div> กำลังบันทึกข้อมูลลงระบบ...';
+            statusElement.className = 'save-status';
+            statusElement.style.display = 'block';
+
+            try {
+                // เตรียมข้อมูลสำหรับบันทึก
+                const timestamp = new Date().toISOString();
+                const dataToSave = {
+                    timestamp: timestamp,
+                    fullName: personalInfo.fullName,
+                    organization: personalInfo.organization || 'ไม่ระบุ',
+                    email: personalInfo.email,
+                    averageScore: averageScore.toFixed(2),
+                    totalScores: scores.reduce((sum, score) => sum + score.score, 0)
+                };
+
+                // เพิ่มคะแนนแต่ละด้าน
+                scores.forEach(score => {
+                    const key = score.name.replace(/\s+/g, '_').replace(/[^\w]/g, '');
+                    dataToSave[key] = score.score;
+                });
+
+                // ส่งข้อมูลไป Google Apps Script
+                // หมายเหตุ: คุณต้องสร้าง Google Apps Script Web App และใส่ URL ที่นี่
+                const response = await fetch('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE', {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataToSave)
+                });
+
+                if (response.ok) {
+                    statusElement.innerHTML = '✅ บันทึกข้อมูลสำเร็จ! ข้อมูลถูกเก็บไว้ในระบบแล้ว';
+                    statusElement.className = 'save-status success';
+                    setTimeout(() => {
+                        statusElement.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('การบันทึกไม่สำเร็จ');
+                }
+            } catch (error) {
+                console.error('Error saving to Google Sheets:', error);
+                statusElement.innerHTML = '⚠️ ไม่สามารถบันทึกข้อมูลได้ในขณะนี้ แต่คุณยังสามารถดาวน์โหลดผลลัพธ์ได้';
+                statusElement.className = 'save-status error';
+                setTimeout(() => {
+                    statusElement.style.display = 'none';
+                }, 8000);
+            }
+        }
+
         // ดาวน์โหลดกราฟเป็นรูปภาพ
         function downloadChartImage() {
             if (!window.radarChartInstance) {
@@ -1826,251 +2123,189 @@
                 return;
             }
 
-            const canvas = document.getElementById('radarChart');
-            const link = document.createElement('a');
-            link.download = `wheel-of-life-chart-${new Date().toISOString().split('T')[0]}.png`;
-            link.href = canvas.toDataURL('image/png', 1.0);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            try {
+                const canvas = document.getElementById('radarChart');
+                const link = document.createElement('a');
+                link.download = `wheel-of-life-chart-${new Date().toISOString().split('T')[0]}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Error downloading chart:', error);
+                alert('เกิดข้อผิดพลาดในการดาวน์โหลดกราฟ');
+            }
         }
 
-        // ดาวน์โหลด PDF พร้อมกราหรายละเอียด
+        // ดาวน์โหลด PDF รายละเอียด
         function downloadDetailedPDF() {
             if (!currentResults || !window.radarChartInstance) {
                 alert('ไม่พบข้อมูลหรือกราฟที่จะดาวน์โหลด');
                 return;
             }
 
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // การตั้งค่าสำหรับภาษาไทย (ใช้ฟอนต์ที่รองรับ)
-            doc.setFont("helvetica");
-            
-            // หัวเรื่อง
-            doc.setFontSize(22);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Wheel of Life Assessment Results', 105, 25, { align: 'center' });
-            
-            // เส้นใต้หัวเรื่อง
-            doc.setDrawColor(102, 126, 234);
-            doc.setLineWidth(1);
-            doc.line(20, 30, 190, 30);
-            
-            // ข้อมูลพื้นฐาน
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            let yPos = 45;
-            
-            const assessmentDate = new Date(currentResults.timestamp).toLocaleDateString('th-TH', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            doc.text(`Assessment Date: ${assessmentDate}`, 20, yPos);
-            yPos += 8;
-            doc.text(`Overall Average Score: ${currentResults.averageScore.toFixed(1)}/25 points`, 20, yPos);
-            yPos += 8;
-            doc.text(`Sections Completed: ${currentResults.validSectionCount}/12 sections`, 20, yPos);
-            yPos += 8;
-            doc.text(`Total Score: ${currentResults.scores.reduce((sum, score) => sum + score.score, 0)}/300 points`, 20, yPos);
-            yPos += 20;
-
-            // กรอบสรุปผล
-            doc.setFillColor(240, 248, 255);
-            doc.rect(15, yPos - 5, 180, 25, 'F');
-            doc.setDrawColor(102, 126, 234);
-            doc.rect(15, yPos - 5, 180, 25);
-            
-            // ผลการประเมิน
-            doc.setFontSize(14);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Assessment Summary:', 20, yPos + 5);
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            
-            let summaryText = '';
-            if (currentResults.averageScore >= 23) {
-                summaryText = 'Excellent! Outstanding quality of life across multiple dimensions.';
-            } else if (currentResults.averageScore >= 18) {
-                summaryText = 'Very Good! High quality of life with room for further improvement.';
-            } else if (currentResults.averageScore >= 11) {
-                summaryText = 'Moderate. Some strengths with several areas needing development.';
-            } else {
-                summaryText = 'Needs Improvement. Priority focus required on life quality enhancement.';
-            }
-            
-            doc.text(summaryText, 20, yPos + 15, { maxWidth: 170 });
-            yPos += 35;
-
-            // เพิ่มกราฟ Radar Chart
-            if (window.radarChartInstance) {
-                doc.setFontSize(16);
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                
+                // การตั้งค่าสำหรับภาษาไทย
+                doc.setFont("helvetica");
+                
+                // หัวเรื่อง
+                doc.setFontSize(22);
                 doc.setTextColor(102, 126, 234);
-                doc.text('Wheel of Life - Balance Chart', 105, yPos, { align: 'center' });
-                yPos += 10;
+                doc.text('Wheel of Life Assessment Results', 105, 25, { align: 'center' });
                 
-                const canvas = document.getElementById('radarChart');
-                const chartImageData = canvas.toDataURL('image/png', 1.0);
+                // เส้นใต้หัวเรื่อง
+                doc.setDrawColor(102, 126, 234);
+                doc.setLineWidth(1);
+                doc.line(20, 30, 190, 30);
                 
-                // เพิ่มรูปภาพของกราฟ
-                const imgWidth = 140;
-                const imgHeight = 100;
-                const imgX = (210 - imgWidth) / 2; // จัดกึ่งกลาง
+                // ข้อมูลพื้นฐาน
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                let yPos = 45;
                 
-                doc.addImage(chartImageData, 'PNG', imgX, yPos, imgWidth, imgHeight);
-                yPos += imgHeight + 15;
-            }
+                const assessmentDate = new Date(currentResults.timestamp).toLocaleDateString('th-TH', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                doc.text(`Name: ${currentResults.personalInfo.fullName}`, 20, yPos);
+                yPos += 8;
+                if (currentResults.personalInfo.organization) {
+                    doc.text(`Organization: ${currentResults.personalInfo.organization}`, 20, yPos);
+                    yPos += 8;
+                }
+                doc.text(`Email: ${currentResults.personalInfo.email}`, 20, yPos);
+                yPos += 8;
+                doc.text(`Assessment Date: ${assessmentDate}`, 20, yPos);
+                yPos += 8;
+                doc.text(`Overall Average Score: ${currentResults.averageScore.toFixed(1)}/25 points`, 20, yPos);
+                yPos += 8;
+                doc.text(`Sections Completed: ${currentResults.validSectionCount}/12 sections`, 20, yPos);
+                yPos += 8;
+                doc.text(`Total Score: ${currentResults.scores.reduce((sum, score) => sum + score.score, 0)}/300 points`, 20, yPos);
+                yPos += 20;
 
-            // ขึ้นหน้าใหม่สำหรับคะแนนรายละเอียด
-            doc.addPage();
-            yPos = 30;
-
-            // คะแนนรายละเอียดแต่ละด้าน
-            doc.setFontSize(18);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Detailed Scores by Dimension', 105, yPos, { align: 'center' });
-            yPos += 20;
-            
-            // เรียงคะแนนจากสูงไปต่ำ
-            const sortedScores = [...currentResults.scores].sort((a, b) => b.score - a.score);
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            
-            sortedScores.forEach((score, index) => {
-                // กำหนดสีตามคะแนน
-                let color = [0, 0, 0]; // ดำ (default)
-                let level = '';
-                if (score.score >= 23) {
-                    color = [76, 175, 80]; // เขียว
-                    level = 'Excellent';
-                } else if (score.score >= 18) {
-                    color = [139, 195, 74]; // เขียวอ่อน
-                    level = 'Good';
-                } else if (score.score >= 11) {
-                    color = [255, 152, 0]; // ส้ม
-                    level = 'Moderate';
+                // กรอบสรุปผล
+                doc.setFillColor(240, 248, 255);
+                doc.rect(15, yPos - 5, 180, 25, 'F');
+                doc.setDrawColor(102, 126, 234);
+                doc.rect(15, yPos - 5, 180, 25);
+                
+                // ผลการประเมิน
+                doc.setFontSize(14);
+                doc.setTextColor(102, 126, 234);
+                doc.text('Assessment Summary:', 20, yPos + 5);
+                doc.setFontSize(11);
+                doc.setTextColor(0, 0, 0);
+                
+                let summaryText = '';
+                if (currentResults.averageScore >= 23) {
+                    summaryText = 'Excellent! Outstanding quality of life across multiple dimensions.';
+                } else if (currentResults.averageScore >= 18) {
+                    summaryText = 'Very Good! High quality of life with room for further improvement.';
+                } else if (currentResults.averageScore >= 11) {
+                    summaryText = 'Moderate. Some strengths with several areas needing development.';
                 } else {
-                    color = [244, 67, 54]; // แดง
-                    level = 'Needs Improvement';
+                    summaryText = 'Needs Improvement. Priority focus required on life quality enhancement.';
                 }
                 
-                // วาดกรอบสำหรับแต่ละรายการ
-                if (index % 2 === 0) {
-                    doc.setFillColor(248, 249, 250);
-                    doc.rect(15, yPos - 3, 180, 12, 'F');
-                }
-                
-                doc.setTextColor(0, 0, 0);
-                doc.text(`${index + 1}.`, 20, yPos + 3);
-                
-                // ชื่อด้าน (ย่อถ้ายาวเกินไป)
-                const dimensionName = score.name.length > 35 ? score.name.substring(0, 32) + '...' : score.name;
-                doc.text(dimensionName, 30, yPos + 3);
-                
-                // คะแนนและระดับ
-                doc.setTextColor(...color);
-                doc.setFont("helvetica", "bold");
-                doc.text(`${score.score}/25`, 150, yPos + 3);
-                doc.setFont("helvetica", "normal");
-                doc.text(`(${level})`, 168, yPos + 3);
-                
-                yPos += 12;
-                
-                // ขึ้นหน้าใหม่ถ้าเต็ม
-                if (yPos > 260) {
-                    doc.addPage();
-                    yPos = 30;
-                }
-            });
+                doc.text(summaryText, 20, yPos + 15, { maxWidth: 170 });
+                yPos += 35;
 
-            // เพิ่มหน้าสำหรับคำแนะนำ
-            doc.addPage();
-            yPos = 30;
-            
-            doc.setFontSize(18);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Recommendations & Action Steps', 105, yPos, { align: 'center' });
-            yPos += 20;
+                // เพิ่มกราฟ Radar Chart
+                if (window.radarChartInstance) {
+                    doc.setFontSize(16);
+                    doc.setTextColor(102, 126, 234);
+                    doc.text('Wheel of Life - Balance Chart', 105, yPos, { align: 'center' });
+                    yPos += 10;
+                    
+                    const canvas = document.getElementById('radarChart');
+                    const chartImageData = canvas.toDataURL('image/png', 1.0);
+                    
+                    // เพิ่มรูปภาพของกราฟ
+                    const imgWidth = 140;
+                    const imgHeight = 100;
+                    const imgX = (210 - imgWidth) / 2;
+                    
+                    doc.addImage(chartImageData, 'PNG', imgX, yPos, imgWidth, imgHeight);
+                    yPos += imgHeight + 15;
+                }
 
-            // จุดแข็ง
-            const highScores = currentResults.scores.filter(score => score.score >= 20);
-            if (highScores.length > 0) {
-                doc.setFontSize(14);
-                doc.setTextColor(76, 175, 80);
-                doc.text('Your Strengths:', 20, yPos);
-                yPos += 10;
+                // ขึ้นหน้าใหม่สำหรับคะแนนรายละเอียด
+                doc.addPage();
+                yPos = 30;
+
+                // คะแนนรายละเอียดแต่ละด้าน
+                doc.setFontSize(18);
+                doc.setTextColor(102, 126, 234);
+                doc.text('Detailed Scores by Dimension', 105, yPos, { align: 'center' });
+                yPos += 20;
+                
+                // เรียงคะแนนจากสูงไปต่ำ
+                const sortedScores = [...currentResults.scores].sort((a, b) => b.score - a.score);
                 
                 doc.setFontSize(11);
                 doc.setTextColor(0, 0, 0);
-                highScores.forEach(score => {
-                    doc.text(`• ${score.name}: ${score.score}/25 points`, 25, yPos);
-                    yPos += 8;
-                });
-                yPos += 10;
-            }
-
-            // ด้านที่ต้องพัฒนา
-            const lowScores = currentResults.scores.filter(score => score.score < 15);
-            if (lowScores.length > 0) {
-                doc.setFontSize(14);
-                doc.setTextColor(244, 67, 54);
-                doc.text('Priority Areas for Development:', 20, yPos);
-                yPos += 10;
                 
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-                lowScores.forEach(score => {
-                    doc.text(`• ${score.name}: ${score.score}/25 points`, 25, yPos);
-                    yPos += 8;
+                sortedScores.forEach((score, index) => {
+                    // กำหนดสีตามคะแนน
+                    let color = [0, 0, 0];
+                    let level = '';
+                    if (score.score >= 23) {
+                        color = [76, 175, 80];
+                        level = 'Excellent';
+                    } else if (score.score >= 18) {
+                        color = [139, 195, 74];
+                        level = 'Good';
+                    } else if (score.score >= 11) {
+                        color = [255, 152, 0];
+                        level = 'Moderate';
+                    } else {
+                        color = [244, 67, 54];
+                        level = 'Needs Improvement';
+                    }
+                    
+                    // วาดกรอบสำหรับแต่ละรายการ
+                    if (index % 2 === 0) {
+                        doc.setFillColor(248, 249, 250);
+                        doc.rect(15, yPos - 3, 180, 12, 'F');
+                    }
+                    
+                    doc.setTextColor(0, 0, 0);
+                    doc.text(`${index + 1}.`, 20, yPos + 3);
+                    
+                    // ชื่อด้าน
+                    const dimensionName = score.name.length > 35 ? score.name.substring(0, 32) + '...' : score.name;
+                    doc.text(dimensionName, 30, yPos + 3);
+                    
+                    // คะแนนและระดับ
+                    doc.setTextColor(...color);
+                    doc.setFont("helvetica", "bold");
+                    doc.text(`${score.score}/25`, 150, yPos + 3);
+                    doc.setFont("helvetica", "normal");
+                    doc.text(`(${level})`, 168, yPos + 3);
+                    
+                    yPos += 12;
+                    
+                    // ขึ้นหน้าใหม่ถ้าเต็ม
+                    if (yPos > 260) {
+                        doc.addPage();
+                        yPos = 30;
+                    }
                 });
-                yPos += 10;
-            }
 
-            // คำแนะนำทั่วไป
-            doc.setFontSize(14);
-            doc.setTextColor(102, 126, 234);
-            doc.text('General Recommendations:', 20, yPos);
-            yPos += 15;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            
-            const recommendations = [
-                'Focus on 1-2 lowest scoring areas for immediate improvement',
-                'Set specific, measurable goals for each priority area',
-                'Create daily habits that support your development goals',
-                'Seek support from mentors, coaches, or trusted advisors',
-                'Track your progress monthly and adjust strategies as needed',
-                'Celebrate small wins to maintain motivation',
-                'Consider professional help for areas requiring specialized support'
-            ];
-            
-            recommendations.forEach(rec => {
-                doc.text(`• ${rec}`, 25, yPos, { maxWidth: 160 });
-                yPos += 12;
-                
-                if (yPos > 260) {
-                    doc.addPage();
-                    yPos = 30;
-                }
-            });
+                // บันทึกไฟล์
+                const fileName = `wheel-of-life-report-${currentResults.personalInfo.fullName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
+                doc.save(fileName);
 
-            // Footer ในทุกหน้า
-            const pageCount = doc.internal.getNumberOfPages();
-            for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
-                doc.setTextColor(128, 128, 128);
-                doc.text(`Wheel of Life Assessment Report - Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-                doc.text(`Generated on ${new Date().toLocaleDateString('en-US')}`, 105, 295, { align: 'center' });
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('เกิดข้อผิดพลาดในการสร้าง PDF');
             }
-            
-            // บันทึกไฟล์
-            doc.save(`wheel-of-life-detailed-report-${new Date().toISOString().split('T')[0]}.pdf`);
         }
 
         // ดาวน์โหลดข้อมูลเป็น JSON
@@ -2080,67 +2315,148 @@
                 return;
             }
 
-            const dataStr = JSON.stringify(currentResults, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `wheel-of-life-results-${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            try {
+                const dataStr = JSON.stringify(currentResults, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                const fileName = `wheel-of-life-data-${currentResults.personalInfo.fullName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.json`;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Error downloading JSON:', error);
+                alert('เกิดข้อผิดพลาดในการดาวน์โหลด JSON');
+            }
         }
 
-        // ดาวน์โหลดเป็น PDF
+        // ดาวน์โหลดเป็น PDF สรุป
         function downloadPDF() {
             if (!currentResults) {
                 alert('ไม่พบข้อมูลที่จะดาวน์โหลด');
                 return;
             }
 
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // ตั้งค่าฟอนต์ (ใช้ฟอนต์พื้นฐานที่ไม่ต้องการ Thai font)
-            doc.setFontSize(20);
-            doc.text('Wheel of Life Assessment Results', 20, 30);
-            
-            doc.setFontSize(14);
-            let yPosition = 50;
-            
-            // ข้อมูลพื้นฐาน
-            doc.text(`Date: ${new Date(currentResults.timestamp).toLocaleDateString('th-TH')}`, 20, yPosition);
-            yPosition += 10;
-            doc.text(`Average Score: ${currentResults.averageScore.toFixed(1)}/25`, 20, yPosition);
-            yPosition += 10;
-            doc.text(`Sections Completed: ${currentResults.validSectionCount}/12`, 20, yPosition);
-            yPosition += 20;
-            
-            // คะแนนแต่ละด้าน
-            doc.setFontSize(16);
-            doc.text('Detailed Scores:', 20, yPosition);
-            yPosition += 15;
-            
-            doc.setFontSize(12);
-            currentResults.scores.forEach((score, index) => {
-                doc.text(`${index + 1}. ${score.name}: ${score.score}/25`, 25, yPosition);
-                yPosition += 8;
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
                 
-                // ขึ้นหน้าใหม่ถ้าเต็ม
-                if (yPosition > 270) {
-                    doc.addPage();
-                    yPosition = 30;
+                doc.setFontSize(20);
+                doc.text('Wheel of Life Assessment Summary', 20, 30);
+                
+                doc.setFontSize(14);
+                let yPosition = 50;
+                
+                // ข้อมูลพื้นฐาน
+                doc.text(`Name: ${currentResults.personalInfo.fullName}`, 20, yPosition);
+                yPosition += 10;
+                if (currentResults.personalInfo.organization) {
+                    doc.text(`Organization: ${currentResults.personalInfo.organization}`, 20, yPosition);
+                    yPosition += 10;
                 }
-            });
-            
-            // บันทึกไฟล์
-            doc.save(`wheel-of-life-summary-${new Date().toISOString().split('T')[0]}.pdf`);
+                doc.text(`Email: ${currentResults.personalInfo.email}`, 20, yPosition);
+                yPosition += 10;
+                doc.text(`Date: ${new Date(currentResults.timestamp).toLocaleDateString('th-TH')}`, 20, yPosition);
+                yPosition += 10;
+                doc.text(`Average Score: ${currentResults.averageScore.toFixed(1)}/25`, 20, yPosition);
+                yPosition += 10;
+                doc.text(`Sections Completed: ${currentResults.validSectionCount}/12`, 20, yPosition);
+                yPosition += 20;
+                
+                // คะแนนแต่ละด้าน
+                doc.setFontSize(16);
+                doc.text('Detailed Scores:', 20, yPosition);
+                yPosition += 15;
+                
+                doc.setFontSize(12);
+                currentResults.scores.forEach((score, index) => {
+                    doc.text(`${index + 1}. ${score.name}: ${score.score}/25`, 25, yPosition);
+                    yPosition += 8;
+                    
+                    // ขึ้นหน้าใหม่ถ้าเต็ม
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 30;
+                    }
+                });
+                
+                // บันทึกไฟล์
+                const fileName = `wheel-of-life-summary-${currentResults.personalInfo.fullName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
+                doc.save(fileName);
+
+            } catch (error) {
+                console.error('Error generating PDF summary:', error);
+                alert('เกิดข้อผิดพลาดในการสร้าง PDF สรุป');
+            }
         }
 
         // พิมพ์ผลลัพธ์
         function printResults() {
             window.print();
         }
+
+        // Responsive chart updates
+        window.addEventListener('resize', function() {
+            if (window.radarChartInstance) {
+                window.radarChartInstance.resize();
+            }
+        });
     </script>
+    
+    <!-- Google Apps Script สำหรับบันทึกข้อมูล -->
+    <!-- คุณต้องสร้าง Google Apps Script ด้วยโค้ดนี้และใส่ URL ในฟังก์ชัน saveToGoogleSheets -->
+    <!--
+    function doPost(e) {
+      try {
+        const data = JSON.parse(e.postData.contents);
+        const sheet = SpreadsheetApp.getActiveSheet();
+        
+        // ถ้าเป็นครั้งแรก ให้สร้าง header
+        if (sheet.getLastRow() === 0) {
+          const headers = [
+            'Timestamp', 'FullName', 'Organization', 'Email', 'AverageScore', 'TotalScores',
+            'Health', 'Intellectual', 'Emotional', 'Character', 'Spiritual', 
+            'Love', 'Parenting', 'Social', 'Financial', 'Career', 'Quality', 'Vision'
+          ];
+          sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+        }
+        
+        // เพิ่มข้อมูลใหม่
+        const newRow = [
+          data.timestamp,
+          data.fullName,
+          data.organization,
+          data.email,
+          data.averageScore,
+          data.totalScores,
+          data.สุขภาพกายและสุขภาพใจ || '',
+          data.ชีวิตทางปัญญา || '',
+          data.ชีวิตด้านอารมณ์ || '',
+          data.คุณลักษณะนิสัยและค่านิยม || '',
+          data.จิตวิญญาณและความหมายของชีวิต || '',
+          data.ความรักและความสัมพันธ์คู่ชีวิต || '',
+          data.บทบาทความเป็นพ่อแม่ || '',
+          data.ชีวิตด้านสังคมและมิตรภาพ || '',
+          data.ชีวิตด้านการเงินและความมั่งคั่ง || '',
+          data.ชีวิตด้านอาชีพและความสำเร็จในงาน || '',
+          data.คุณภาพชีวิต || '',
+          data.วิสัยทัศน์ชีวิตโดยรวม || ''
+        ];
+        
+        sheet.appendRow(newRow);
+        
+        return ContentService
+          .createTextOutput(JSON.stringify({ success: true }))
+          .setMimeType(ContentService.MimeType.JSON);
+        
+      } catch (error) {
+        return ContentService
+          .createTextOutput(JSON.stringify({ success: false, error: error.toString() }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+    -->
 </body>
 </html>
