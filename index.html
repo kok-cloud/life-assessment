@@ -85,7 +85,7 @@
             padding: 15px;
         }
 
-        /* Personal Info Section - แสดงเฉพาะหน้าแรก */
+        /* Personal Info Section */
         .personal-info {
             margin-bottom: 25px;
             padding: 20px;
@@ -401,16 +401,6 @@
             transition: width 0.5s ease;
         }
 
-        .low-scores {
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            line-height: 1.5;
-            font-size: 0.9rem;
-        }
-
         .radar-chart-container {
             background: rgba(255,255,255,0.95);
             border-radius: 12px;
@@ -665,7 +655,7 @@
                 page-break-inside: avoid;
             }
             
-            .interpretation, .low-scores {
+            .interpretation {
                 background: #f9f9f9 !important;
                 color: black !important;
                 border: 1px solid #ddd !important;
@@ -731,7 +721,7 @@
                         <input type="email" id="email" name="email" required placeholder="กรุณากรอกอีเมล์">
                     </div>
                     <div style="text-align: center; margin-top: 25px;">
-                        <button type="button" class="nav-btn" onclick="startAssessment()">เริ่มประเมิน</button>
+                        <button type="button" class="nav-btn" onclick="startAssessment()">เริ่มทำแบบประเมิน</button>
                     </div>
                 </div>
                 
@@ -895,1037 +885,242 @@
                             <label class="option"><input type="radio" name="finance_1" value="5"><div class="option-text">มีระบบการจัดการเงินที่ยอดเยี่ยม วางแผนการเงินระยะสั้นและยาวได้อย่างมีประสิทธิภาพ</div></label>
                         </div>
                     </div>
-                </div>
 
-                <div class="navigation">
-                    <button type="button" class="nav-btn" id="prevBtn" onclick="previousSection()" disabled>ย้อนกลับ</button>
-                    <button type="button" class="nav-btn" id="nextBtn" onclick="nextSection()">ถัดไป</button>
-                    <button type="button" class="calculate-btn" id="calculateBtn" onclick="calculateResults()">คำนวณผลคะแนน</button>
-                </div>
-            </form>
-
-            <div id="results" class="results">
-                <h2>ผลการประเมินความสมดุลชีวิต 12 ด้าน (☸️Wheel of Life)</h2>
-                <div class="overall-score">
-                    <span class="score" id="overallScore">0</span>
-                    <span class="label">คะแนนเฉลี่ยโดยรวม (จาก 25 คะแนน)</span>
-                </div>
-                <div class="score-breakdown" id="scoreBreakdown">
-                    <!-- Results will be populated here -->
-                </div>
-                
-                <div class="radar-chart-container">
-                    <h3>📊 Wheel of Life - ภาพรวมความสมดุลชีวิต 12 ด้าน</h3>
-                    <div style="position: relative; width: 100%; margin: 0 auto;">
-                        <canvas id="radarChart" class="chart-canvas"></canvas>
+                    <div class="question">
+                        <div class="question-text">3.2 คุณมีเงินออมและเงินสำรองฉุกเฉินเพียงพอหรือไม่?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="finance_2" value="0"><div class="option-text">ไม่มีเงินออมเลย ไม่มีเงินสำรองฉุกเฉิน</div></label>
+                            <label class="option"><input type="radio" name="finance_2" value="1"><div class="option-text">มีเงินออมเล็กน้อย ไม่เพียงพอสำหรับเหตุฉุกเฉิน</div></label>
+                            <label class="option"><input type="radio" name="finance_2" value="2"><div class="option-text">มีเงินออมพอใช้ได้ 1-2 เดือน หากไม่มีรายได้</div></label>
+                            <label class="option"><input type="radio" name="finance_2" value="3"><div class="option-text">มีเงินสำรองฉุกเฉินพอใช้ได้ 3-6 เดือน</div></label>
+                            <label class="option"><input type="radio" name="finance_2" value="4"><div class="option-text">มีเงินสำรองฉุกเฉินมากกว่า 6 เดือน และมีเงินออมอื่น ๆ</div></label>
+                            <label class="option"><input type="radio" name="finance_2" value="5"><div class="option-text">มีเงินสำรองฉุกเฉินมากกว่า 1 ปี พร้อมกับมีเงินออมและลงทุนหลากหลายรูปแบบ</div></label>
+                        </div>
                     </div>
-                    <div class="chart-controls">
-                        <button class="chart-download-btn" onclick="downloadChartImage()">📸 ดาวน์โหลดกราฟ</button>
-                        <button class="chart-download-btn" onclick="downloadDetailedPDF()">📊 รายงาน PDF</button>
+
+                    <div class="question">
+                        <div class="question-text">3.3 คุณมีการลงทุนและวางแผนเพื่ออนาคตแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="finance_3" value="0"><div class="option-text">ไม่มีการลงทุนเลย ไม่ได้วางแผนเรื่องการเงินในอนาคต</div></label>
+                            <label class="option"><input type="radio" name="finance_3" value="1"><div class="option-text">เริ่มสนใจเรื่องการลงทุน แต่ยังไม่ได้เริ่มทำจริง</div></label>
+                            <label class="option"><input type="radio" name="finance_3" value="2"><div class="option-text">เริ่มลงทุนบ้างแล้ว แต่ยังไม่มั่นใจในการตัดสินใจ</div></label>
+                            <label class="option"><input type="radio" name="finance_3" value="3"><div class="option-text">มีการลงทุนเบื้องต้น เช่น กองทุน หุ้น หรือทองคำ</div></label>
+                            <label class="option"><input type="radio" name="finance_3" value="4"><div class="option-text">มีการลงทุนหลากหลาย มีแผนการเงินระยะยาว</div></label>
+                            <label class="option"><input type="radio" name="finance_3" value="5"><div class="option-text">มีพอร์ตการลงทุนที่สมดุล วางแผนการเงินระยะยาวและเกษียณอย่างชัดเจน</div></label>
+                        </div>
                     </div>
-                    <p style="margin-top: 15px; color: #666; font-size: 0.8rem; text-align: center; line-height: 1.4;">
-                        ☸️ Wheel of Life แสดงความสมดุลใน 12 ด้านของชีวิต โดยแกนกลางคือ 0 คะแนน และขอบนอกคือ 25 คะแนน<br>
-                        <span style="color: #4CAF50;">●</span> ยอดเยี่ยม (23-25) | 
-                        <span style="color: #8BC34A;">●</span> ดี (18-22) | 
-                        <span style="color: #FF9800;">●</span> ปานกลาง (11-17) | 
-                        <span style="color: #F44336;">●</span> ต้องปรับปรุง (0-10)
-                    </p>
-                </div>
-                
-                <div class="interpretation" id="interpretation">
-                    <!-- Interpretation will be populated here -->
-                </div>
-                
-                <div class="download-section">
-                    <h3>💾 ดาวน์โหลดผลลัพธ์</h3>
-                    <div class="download-grid">
-                        <button class="download-btn" onclick="downloadJSON()">📄 JSON</button>
-                        <button class="download-btn" onclick="downloadPDF()">📑 PDF สรุป</button>
-                        <button class="download-btn" onclick="downloadDetailedPDF()">📊 PDF เต็ม</button>
-                        <button class="download-btn" onclick="downloadChartImage()">📸 PNG</button>
-                        <button class="download-btn" onclick="printResults()">🖨️ พิมพ์</button>
+
+                    <div class="question">
+                        <div class="question-text">3.4 หนี้สินของคุณอยู่ในระดับที่จัดการได้หรือไม่?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="finance_4" value="0"><div class="option-text">มีหนี้สินมาก ผ่อนไม่ไหว ส่งผลกระทบต่อการดำรงชีวิต</div></label>
+                            <label class="option"><input type="radio" name="finance_4" value="1"><div class="option-text">มีหนี้สินค่อนข้างมาก ผ่อนได้แต่ลำบาก</div></label>
+                            <label class="option"><input type="radio" name="finance_4" value="2"><div class="option-text">มีหนี้สินปานกลาง สามารถผ่อนได้ แต่ยังมีภาระ</div></label>
+                            <label class="option"><input type="radio" name="finance_4" value="3"><div class="option-text">มีหนี้สินบ้าง แต่จัดการได้ดี ไม่ส่งผลกระทบมาก</div></label>
+                            <label class="option"><input type="radio" name="finance_4" value="4"><div class="option-text">มีหนี้สินน้อย หรือเป็นหนี้ดี เช่น บ้าน รถ ที่มีแผนจ่ายชัดเจน</div></label>
+                            <label class="option"><input type="radio" name="finance_4" value="5"><div class="option-text">ไม่มีหนี้สิน หรือมีเฉพาะหนี้ดีที่ใช้เป็นเครื่องมือทางการเงิน</div></label>
+                        </div>
                     </div>
-                    <p style="color: rgba(255,255,255,0.8); font-size: 0.8rem; text-align: center; margin-top: 12px; line-height: 1.4;">
-                        💡 แนะนำ: ใช้ "PDF เต็ม" สำหรับรายงานที่สมบูรณ์ที่สุด
-                    </p>
-                </div>
-                
-                <div class="low-scores" id="lowScores">
-                    <!-- Low scoring areas will be highlighted here -->
-                </div>
 
-                <div class="save-status" id="saveStatus">
-                    <!-- Save status will be shown here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let currentSection = 0;
-        const totalSections = 3; // เพิ่มเป็น 3 sections สำหรับตัวอย่าง (เมื่อทำจริงให้เป็น 12)
-        let currentResults = null;
-        let personalInfo = {};
-
-        // ตรวจสอบว่า Chart.js โหลดเสร็จแล้วหรือยัง
-        let chartJSLoaded = false;
-        
-        // รอให้ Chart.js โหลดเสร็จ
-        function waitForChartJS() {
-            return new Promise((resolve) => {
-                if (typeof Chart !== 'undefined') {
-                    chartJSLoaded = true;
-                    resolve();
-                } else {
-                    setTimeout(() => {
-                        waitForChartJS().then(resolve);
-                    }, 100);
-                }
-            });
-        }
-
-        // Personal Info Validation
-        function validatePersonalInfo() {
-            const fullName = document.getElementById('fullName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            
-            if (!fullName) {
-                showError('กรุณากรอกชื่อ-นามสกุล');
-                return false;
-            }
-            
-            if (!email) {
-                showError('กรุณากรอกอีเมล์');
-                return false;
-            }
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showError('กรุณากรอกอีเมล์ให้ถูกต้อง');
-                return false;
-            }
-            
-            // เก็บข้อมูลส่วนบุคคล
-            personalInfo = {
-                fullName: fullName,
-                organization: document.getElementById('organization').value.trim(),
-                email: email,
-                timestamp: new Date().toISOString()
-            };
-            
-            hideError();
-            return true;
-        }
-
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function hideError() {
-            document.getElementById('errorMessage').style.display = 'none';
-        }
-
-        function startAssessment() {
-            if (!validatePersonalInfo()) {
-                return;
-            }
-            
-            currentSection = 1;
-            document.getElementById('personalInfoSection').classList.remove('active');
-            showSection(currentSection);
-        }
-
-        // Navigation functionality
-        function showSection(sectionNumber) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Show target section
-            const targetSection = document.querySelector(`[data-section="${sectionNumber}"]`);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
-            
-            // Update progress bar
-            const progress = ((sectionNumber) / totalSections) * 100;
-            document.getElementById('headerProgress').style.width = progress + '%';
-            
-            // Update navigation buttons
-            document.getElementById('prevBtn').disabled = sectionNumber === 1;
-            document.getElementById('nextBtn').style.display = sectionNumber === totalSections ? 'none' : 'block';
-            document.getElementById('calculateBtn').style.display = sectionNumber === totalSections ? 'block' : 'none';
-        }
-
-        function nextSection() {
-            // ตรวจสอบว่าตอบคำถามในหน้านี้หรือยัง
-            if (!validateCurrentSection()) {
-                return;
-            }
-            
-            if (currentSection < totalSections) {
-                currentSection++;
-                showSection(currentSection);
-                window.scrollTo(0, 0);
-            }
-        }
-
-        function previousSection() {
-            if (currentSection > 1) {
-                currentSection--;
-                showSection(currentSection);
-                window.scrollTo(0, 0);
-            }
-        }
-
-        // ตรวจสอบว่าตอบคำถามในหน้าปัจจุบันครบหรือยัง
-        function validateCurrentSection() {
-            const currentSectionElement = document.querySelector(`[data-section="${currentSection}"]`);
-            if (!currentSectionElement) return true;
-            
-            const questions = currentSectionElement.querySelectorAll('.question');
-            let allAnswered = true;
-            
-            questions.forEach(question => {
-                const inputs = question.querySelectorAll('input[type="radio"]');
-                const groupName = inputs[0]?.name;
-                if (groupName) {
-                    const checked = question.querySelector(`input[name="${groupName}"]:checked`);
-                    if (!checked) {
-                        allAnswered = false;
-                    }
-                }
-            });
-            
-            if (!allAnswered) {
-                showError(`กรุณาตอบคำถามในหน้านี้ให้ครบก่อนไปหน้าถัดไป`);
-                return false;
-            }
-            
-            hideError();
-            return true;
-        }
-
-        // Add interactive functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // รอให้ Chart.js โหลดเสร็จ
-            waitForChartJS();
-            
-            // Handle option selection
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                option.addEventListener('click', function() {
-                    const input = this.querySelector('input');
-                    input.checked = true;
-                    
-                    const name = input.name;
-                    document.querySelectorAll(`input[name="${name}"]`).forEach(inp => {
-                        inp.closest('.option').classList.remove('selected');
-                    });
-                    this.classList.add('selected');
-                    
-                    // ซ่อน error message เมื่อมีการตอบคำถาม
-                    hideError();
-                });
-            });
-
-            // Initialize personal info section
-            document.getElementById('personalInfoSection').classList.add('active');
-        });
-
-        function calculateResults() {
-            // ตรวจสอบว่าตอบคำถามครบทุกหน้าหรือยัง
-            if (!validateAllSections()) {
-                return;
-            }
-
-            const sections = [
-                {name: 'สุขภาพกายและสุขภาพใจ', prefix: 'health'},
-                {name: 'อาชีพการงาน', prefix: 'career'},
-                {name: 'การเงินและความมั่นคงทางการเงิน', prefix: 'finance'}
-            ];
-
-            let totalScore = 0;
-            let validSectionCount = 0;
-            const scores = [];
-
-            sections.forEach(section => {
-                let sectionScore = 0;
-                let questionCount = 0;
-
-                // สำหรับแต่ละ section ให้นับจำนวนคำถามที่มีจริง
-                for (let i = 1; i <= 5; i++) {
-                    const selected = document.querySelector(`input[name="${section.prefix}_${i}"]:checked`);
-                    if (selected) {
-                        sectionScore += parseInt(selected.value);
-                        questionCount++;
-                    }
-                }
-
-                if (questionCount > 0) {
-                    scores.push({
-                        name: section.name,
-                        score: sectionScore,
-                        maxScore: 25,
-                        answeredQuestions: questionCount
-                    });
-                    totalScore += sectionScore;
-                    validSectionCount++;
-                }
-            });
-
-            if (validSectionCount === 0) {
-                showError('กรุณาตอบคำถามอย่างน้อย 1 ด้าน');
-                return;
-            }
-
-            const averageScore = totalScore / validSectionCount;
-            
-            displayResults(averageScore, scores, validSectionCount, personalInfo);
-            saveToGoogleSheets(personalInfo, scores, averageScore);
-        }
-
-        // ตรวจสอบว่าตอบคำถามครบทุกหน้าหรือยัง
-        function validateAllSections() {
-            let allValid = true;
-            let firstInvalidSection = null;
-            
-            for (let i = 1; i <= totalSections; i++) {
-                const sectionElement = document.querySelector(`[data-section="${i}"]`);
-                if (!sectionElement) continue;
-                
-                const questions = sectionElement.querySelectorAll('.question');
-                let sectionValid = true;
-                
-                questions.forEach(question => {
-                    const inputs = question.querySelectorAll('input[type="radio"]');
-                    const groupName = inputs[0]?.name;
-                    if (groupName) {
-                        const checked = question.querySelector(`input[name="${groupName}"]:checked`);
-                        if (!checked) {
-                            sectionValid = false;
-                        }
-                    }
-                });
-                
-                if (!sectionValid) {
-                    allValid = false;
-                    if (!firstInvalidSection) {
-                        firstInvalidSection = i;
-                    }
-                }
-            }
-            
-            if (!allValid) {
-                showError(`กรุณาไปตอบคำถามในหน้าที่ ${firstInvalidSection} ให้ครบก่อนคำนวณผล`);
-                // นำผู้ใช้ไปยังหน้าที่ยังไม่ได้ตอบ
-                currentSection = firstInvalidSection;
-                showSection(currentSection);
-                window.scrollTo(0, 0);
-                return false;
-            }
-            
-            hideError();
-            return true;
-        }
-
-        function displayResults(averageScore, scores, validSectionCount, personalInfo) {
-            // เก็บผลลัพธ์สำหรับดาวน์โหลด
-            currentResults = {
-                personalInfo: personalInfo,
-                averageScore: averageScore,
-                scores: scores,
-                validSectionCount: validSectionCount,
-                timestamp: new Date().toISOString(),
-                totalPossibleScore: validSectionCount * 25
-            };
-
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('overallScore').textContent = averageScore.toFixed(1);
-
-            // Display section scores
-            const breakdown = document.getElementById('scoreBreakdown');
-            breakdown.innerHTML = '';
-            scores.forEach(score => {
-                const percentage = (score.score / score.maxScore) * 100;
-                const item = document.createElement('div');
-                item.className = 'score-item';
-                item.innerHTML = `
-                    <div class="score-item-title">${score.name}</div>
-                    <div class="score-item-score">${score.score}/25 คะแนน</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                    <div class="question">
+                        <div class="question-text">3.5 ความรู้และทักษะการจัดการเงินของคุณเป็นอย่างไร?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="finance_5" value="0"><div class="option-text">ไม่มีความรู้เรื่องการเงินเลย ไม่รู้จักการวางแผนทางการเงิน</div></label>
+                            <label class="option"><input type="radio" name="finance_5" value="1"><div class="option-text">มีความรู้เรื่องการเงินเล็กน้อย แต่ยังไม่เข้าใจลึกซึ้ง</div></label>
+                            <label class="option"><input type="radio" name="finance_5" value="2"><div class="option-text">มีความรู้พื้นฐานเรื่องการเงิน สามารถจัดการได้ในระดับเบื้องต้น</div></label>
+                            <label class="option"><input type="radio" name="finance_5" value="3"><div class="option-text">มีความรู้เรื่องการเงินค่อนข้างดี เข้าใจการลงทุนและการออม</div></label>
+                            <label class="option"><input type="radio" name="finance_5" value="4"><div class="option-text">มีความรู้เรื่องการเงินดี สามารถวางแผนและลงทุนได้อย่างมีประสิทธิภาพ</div></label>
+                            <label class="option"><input type="radio" name="finance_5" value="5"><div class="option-text">เป็นผู้เชี่ยวชาญด้านการเงิน สามารถวางแผนทางการเงินที่ซับซ้อนและให้คำแนะนำผู้อื่นได้</div></label>
+                        </div>
                     </div>
-                `;
-                breakdown.appendChild(item);
-            });
-
-            // สร้าง Radar Chart
-            createRadarChart(scores);
-
-            // Interpretation
-            const interpretation = document.getElementById('interpretation');
-            let interpretationText = '';
-            let color = '';
-
-            if (averageScore >= 23) {
-                interpretationText = '🎉 ยอดเยี่ยม! คุณมีคุณภาพชีวิตที่สมบูรณ์และเป็นแบบอย่างที่ดี ควรรักษาและแบ่งปันประสบการณ์ให้ผู้อื่น';
-                color = '#4CAF50';
-            } else if (averageScore >= 18) {
-                interpretationText = '👍 ดีมาก! คุณมีคุณภาพชีวิตที่ดีในหลายด้าน ยังมีพื้นที่สำหรับการพัฒนาให้ดียิ่งขึ้น';
-                color = '#8BC34A';
-            } else if (averageScore >= 11) {
-                interpretationText = '⚖️ ปานกลาง คุณมีจุดแข็งบางด้าน แต่ยังมีหลายด้านที่ต้องพัฒนาอย่างต่อเนื่อง';
-                color = '#FF9800';
-            } else {
-                interpretationText = '🔥 ต้องการการปรับปรุง คุณควรให้ความสำคัญกับการพัฒนาคุณภาพชีวิตอย่างเร่งด่วน';
-                color = '#F44336';
-            }
-
-            interpretation.innerHTML = `
-                <h3 style="color: ${color}">การวิเคราะห์ผล</h3>
-                <div style="margin-bottom: 15px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 6px;">
-                    <p><strong>ผู้ประเมิน:</strong> ${personalInfo.fullName}</p>
-                    ${personalInfo.organization ? `<p><strong>หน่วยงาน:</strong> ${personalInfo.organization}</p>` : ''}
-                    <p><strong>วันที่ประเมิน:</strong> ${new Date().toLocaleDateString('th-TH')}</p>
                 </div>
-                <p style="margin-bottom: 15px;">${interpretationText}</p>
-                <div style="margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.85rem;">
-                    <h4>เกณฑ์การให้คะแนน:</h4>
-                    <p><strong>23-25 คะแนน:</strong> ยอดเยี่ยม - สมบูรณ์แบบในด้านนี้</p>
-                    <p><strong>18-22 คะแนน:</strong> ดี - มีคุณภาพดีแต่ยังพัฒนาได้</p>
-                    <p><strong>11-17 คะแนน:</strong> ปานกลาง - ต้องพัฒนาอย่างต่อเนื่อง</p>
-                    <p><strong>0-10 คะแนน:</strong> ต้องปรับปรุง - ควรให้ความสำคัญเป็นพิเศษ</p>
+
+                <!-- Section 4: Family -->
+                <div class="section" data-section="4">
+                    <div class="section-indicator">ด้านที่ 4 จาก 12</div>
+                    <div class="section-title">
+                        <div class="section-number">4</div>
+                        ความสัมพันธ์ในครอบครัว
+                    </div>
+                    <div class="section-description">ประเมินความสัมพันธ์และความผูกพันกับสมาชิกในครอบครัว</div>
+                    
+                    <div class="question">
+                        <div class="question-text">4.1 ความสัมพันธ์ระหว่างคุณกับสมาชิกในครอบครัวเป็นอย่างไร?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="family_1" value="0"><div class="option-text">มีปัญหาครอบครัวร้ายแรง ไม่สามารถสื่อสารกันได้</div></label>
+                            <label class="option"><input type="radio" name="family_1" value="1"><div class="option-text">มีปัญหาและความขัดแย้งในครอบครัวบ่อยครั้ง</div></label>
+                            <label class="option"><input type="radio" name="family_1" value="2"><div class="option-text">ความสัมพันธ์ปานกลาง มีปัญหาบ้างแต่ยังพอจัดการได้</div></label>
+                            <label class="option"><input type="radio" name="family_1" value="3"><div class="option-text">ความสัมพันธ์ดีพอสมควร มีการสื่อสารกันได้</div></label>
+                            <label class="option"><input type="radio" name="family_1" value="4"><div class="option-text">ความสัมพันธ์ดี มีความรักและเข้าใจกัน</div></label>
+                            <label class="option"><input type="radio" name="family_1" value="5"><div class="option-text">ความสัมพันธ์ยอดเยี่ยม ครอบครัวมีความสุข เข้าใจและสนับสนุนกัน</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4.2 คุณให้เวลากับครอบครัวเพียงพอหรือไม่?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="family_2" value="0"><div class="option-text">แทบไม่มีเวลาให้ครอบครัวเลย ห่างเหินมาก</div></label>
+                            <label class="option"><input type="radio" name="family_2" value="1"><div class="option-text">ให้เวลาครอบครัวน้อยมาก เจอกันแค่ตอนจำเป็น</div></label>
+                            <label class="option"><input type="radio" name="family_2" value="2"><div class="option-text">ให้เวลาครอบครัวบ้าง แต่ยังไม่เพียงพอ</div></label>
+                            <label class="option"><input type="radio" name="family_2" value="3"><div class="option-text">ให้เวลาครอบครัวปานกลาง มีเวลาอยู่ด้วยกันในวันหยุด</div></label>
+                            <label class="option"><input type="radio" name="family_2" value="4"><div class="option-text">ให้เวลาครอบครัวได้ดี มีกิจกรรมร่วมกันสม่ำเสมอ</div></label>
+                            <label class="option"><input type="radio" name="family_2" value="5"><div class="option-text">ให้เวลาครอบครัวได้อย่างเพียงพอ มีคุณภาพเวลาที่อยู่ด้วยกัน</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4.3 การสื่อสารในครอบครัวของคุณเป็นอย่างไร?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="family_3" value="0"><div class="option-text">ไม่มีการสื่อสารกัน หรือสื่อสารแล้วเกิดปัญหา</div></label>
+                            <label class="option"><input type="radio" name="family_3" value="1"><div class="option-text">การสื่อสารมีปัญหา มักเกิดความเข้าใจผิด</div></label>
+                            <label class="option"><input type="radio" name="family_3" value="2"><div class="option-text">สื่อสารกันได้บ้าง แต่ยังไม่ลึกซึ้ง</div></label>
+                            <label class="option"><input type="radio" name="family_3" value="3"><div class="option-text">สื่อสารกันได้ดีพอสมควร เข้าใจกันในระดับหนึ่ง</div></label>
+                            <label class="option"><input type="radio" name="family_3" value="4"><div class="option-text">สื่อสารกันได้ดี เปิดใจพูดคุยกันได้</div></label>
+                            <label class="option"><input type="radio" name="family_3" value="5"><div class="option-text">สื่อสารกันได้ยอดเยี่ยม เข้าใจกันลึกซึ้ง มีการแบ่งปันความรู้สึก</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4.4 ครอบครัวของคุณให้การสนับสนุนซึ่งกันและกันแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="family_4" value="0"><div class="option-text">ไม่มีการสนับสนุนกัน แต่ละคนอยู่กันแบบแยกส่วน</div></label>
+                            <label class="option"><input type="radio" name="family_4" value="1"><div class="option-text">การสนับสนุนกันน้อยมาก ไม่ค่อยช่วยเหลือกัน</div></label>
+                            <label class="option"><input type="radio" name="family_4" value="2"><div class="option-text">มีการสนับสนุนกันบ้าง แต่ไม่ต่อเนื่อง</div></label>
+                            <label class="option"><input type="radio" name="family_4" value="3"><div class="option-text">สนับสนุนกันได้ดีพอสมควร ช่วยเหลือกันเวลามีปัญหา</div></label>
+                            <label class="option"><input type="radio" name="family_4" value="4"><div class="option-text">สนับสนุนกันได้ดี มีการช่วยเหลือและเป็นกำลังใจให้กัน</div></label>
+                            <label class="option"><input type="radio" name="family_4" value="5"><div class="option-text">สนับสนุนกันอย่างเต็มที่ เป็นพลังใจที่สำคัญของกันและกัน</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">4.5 คุณมีส่วนร่วมในกิจกรรมครอบครัวแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="family_5" value="0"><div class="option-text">ไม่เข้าร่วมกิจกรรมครอบครัวเลย หรือไม่มีกิจกรรมครอบครัว</div></label>
+                            <label class="option"><input type="radio" name="family_5" value="1"><div class="option-text">เข้าร่วมกิจกรรมครอบครัวน้อยมาก เฉพาะเทศกาลสำคัญ</div></label>
+                            <label class="option"><input type="radio" name="family_5" value="2"><div class="option-text">เข้าร่วมกิจกรรมครอบครัวบ้าง แต่ไม่ค่อยมีส่วนร่วม</div></label>
+                            <label class="option"><input type="radio" name="family_5" value="3"><div class="option-text">เข้าร่วมกิจกรรมครอบครัวได้ดีพอสมควร</div></label>
+                            <label class="option"><input type="radio" name="family_5" value="4"><div class="option-text">เข้าร่วมและมีส่วนร่วมในกิจกรรมครอบครัวได้ดี</div></label>
+                            <label class="option"><input type="radio" name="family_5" value="5"><div class="option-text">เป็นคนริเริ่มและมีส่วนร่วมในกิจกรรมครอบครัวอย่างเต็มที่</div></label>
+                        </div>
+                    </div>
                 </div>
-                <div style="margin-top: 12px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 0.85rem;">
-                    <h4>📊 สถิติการประเมิน:</h4>
-                    <p>• ประเมินทั้งหมด: ${validSectionCount} ด้าน</p>
-                    <p>• คะแนนรวม: ${scores.reduce((sum, score) => sum + score.score, 0)} คะแนน</p>
-                    <p>• คะแนนเฉลี่ย: ${averageScore.toFixed(1)} คะแนน</p>
+
+                <!-- Section 5: Friends & Social -->
+                <div class="section" data-section="5">
+                    <div class="section-indicator">ด้านที่ 5 จาก 12</div>
+                    <div class="section-title">
+                        <div class="section-number">5</div>
+                        ความสัมพันธ์กับเพื่อนและสังคม
+                    </div>
+                    <div class="section-description">ประเมินความสัมพันธ์กับเพื่อนและการมีส่วนร่วมในสังคม</div>
+                    
+                    <div class="question">
+                        <div class="question-text">5.1 คุณมีเพื่อนสนิทที่ไว้ใจได้แค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="friends_1" value="0"><div class="option-text">ไม่มีเพื่อนสนิทเลย รู้สึกโดดเดี่ยว</div></label>
+                            <label class="option"><input type="radio" name="friends_1" value="1"><div class="option-text">มีเพื่อนสนิทน้อยมาก แต่ไม่ค่อยได้ติดต่อกัน</div></label>
+                            <label class="option"><input type="radio" name="friends_1" value="2"><div class="option-text">มีเพื่อนสนิทบ้าง แต่ความสัมพันธ์ไม่ลึกซึ้งมาก</div></label>
+                            <label class="option"><input type="radio" name="friends_1" value="3"><div class="option-text">มีเพื่อนสนิทที่ดี สามารถพูดคุยและแบ่งปันได้</div></label>
+                            <label class="option"><input type="radio" name="friends_1" value="4"><div class="option-text">มีเพื่อนสนิทหลายคน ความสัมพันธ์ดีและไว้ใจกันได้</div></label>
+                            <label class="option"><input type="radio" name="friends_1" value="5"><div class="option-text">มีเพื่อนสนิทที่ยอดเยี่ยม สามารถพึ่งพาและสนับสนุนกันได้เสมอ</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5.2 คุณมีส่วนร่วมในกิจกรรมสังคมแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="friends_2" value="0"><div class="option-text">ไม่เข้าร่วมกิจกรรมสังคมเลย อยู่แต่ในบ้าน</div></label>
+                            <label class="option"><input type="radio" name="friends_2" value="1"><div class="option-text">เข้าร่วมกิจกรรมสังคมน้อยมาก เฉพาะเวลาจำเป็น</div></label>
+                            <label class="option"><input type="radio" name="friends_2" value="2"><div class="option-text">เข้าร่วมกิจกรรมสังคมบ้าง แต่ไม่สม่ำเสมอ</div></label>
+                            <label class="option"><input type="radio" name="friends_2" value="3"><div class="option-text">เข้าร่วมกิจกรรมสังคมได้ดีพอสมควร มีเครือข่ายทางสังคม</div></label>
+                            <label class="option"><input type="radio" name="friends_2" value="4"><div class="option-text">เข้าร่วมกิจกรรมสังคมได้ดี มีความสัมพันธ์ที่หลากหลาย</div></label>
+                            <label class="option"><input type="radio" name="friends_2" value="5"><div class="option-text">เป็นคนที่มีส่วนร่วมสูงในสังคม เป็นที่รู้จักและเคารพ</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5.3 คุณสามารถสร้างความสัมพันธ์ใหม่ ๆ ได้ง่ายแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="friends_3" value="0"><div class="option-text">สร้างความสัมพันธ์ใหม่ได้ยากมาก ขี้อาย ไม่เก่งสังคม</div></label>
+                            <label class="option"><input type="radio" name="friends_3" value="1"><div class="option-text">สร้างความสัมพันธ์ใหม่ได้ยาก ใช้เวลานานในการคุ้นเคย</div></label>
+                            <label class="option"><input type="radio" name="friends_3" value="2"><div class="option-text">สร้างความสัมพันธ์ใหม่ได้บ้าง แต่ต้องใช้ความพยายาม</div></label>
+                            <label class="option"><input type="radio" name="friends_3" value="3"><div class="option-text">สร้างความสัมพันธ์ใหม่ได้ดีพอสมควร เข้ากับคนได้ไม่ยาก</div></label>
+                            <label class="option"><input type="radio" name="friends_3" value="4"><div class="option-text">สร้างความสัมพันธ์ใหม่ได้ดี เป็นคนเข้าสังคมได้ง่าย</div></label>
+                            <label class="option"><input type="radio" name="friends_3" value="5"><div class="option-text">เป็นคนที่เข้าสังคมได้ยอดเยี่ยม สร้างความสัมพันธ์ใหม่ได้อย่างง่ายดาย</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5.4 คุณให้และรับการสนับสนุนทางสังคมแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="friends_4" value="0"><div class="option-text">ไม่มีการสนับสนุนทางสังคม รู้สึกโดดเดี่ยว</div></label>
+                            <label class="option"><input type="radio" name="friends_4" value="1"><div class="option-text">ได้รับการสนับสนุนทางสังคมน้อยมาก</div></label>
+                            <label class="option"><input type="radio" name="friends_4" value="2"><div class="option-text">มีการสนับสนุนทางสังคมบ้าง แต่ไม่มาก</div></label>
+                            <label class="option"><input type="radio" name="friends_4" value="3"><div class="option-text">มีการสนับสนุนทางสังคมดีพอสมควร มีคนให้คำแนะนำ</div></label>
+                            <label class="option"><input type="radio" name="friends_4" value="4"><div class="option-text">มีการสนับสนุนทางสังคมที่ดี ทั้งให้และรับ</div></label>
+                            <label class="option"><input type="radio" name="friends_4" value="5"><div class="option-text">มีเครือข่ายสนับสนุนทางสังคมที่แข็งแกร่ง เป็นที่พึ่งของคนอื่น</div></label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">5.5 คุณรู้สึกเป็นส่วนหนึ่งของชุมชนหรือกลุ่มสังคมแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="friends_5" value="0"><div class="option-text">ไม่รู้สึกเป็นส่วนหนึ่งของชุมชนใด ๆ เลย</div></label>
+                            <label class="option"><input type="radio" name="friends_5" value="1"><div class="option-text">รู้สึกเป็นส่วนหนึ่งของชุมชนเล็กน้อย</div></label>
+                            <label class="option"><input type="radio" name="friends_5" value="2"><div class="option-text">รู้สึกเป็นส่วนหนึ่งของชุมชนบ้าง แต่ไม่ลึกซึ้ง</div></label>
+                            <label class="option"><input type="radio" name="friends_5" value="3"><div class="option-text">รู้สึกเป็นส่วนหนึ่งของชุมชนดีพอสมควร</div></label>
+                            <label class="option"><input type="radio" name="friends_5" value="4"><div class="option-text">รู้สึกเป็นส่วนหนึ่งของชุมชนได้ดี มีความผูกพัน</div></label>
+                            <label class="option"><input type="radio" name="friends_5" value="5"><div class="option-text">รู้สึกเป็นส่วนสำคัญของชุมชน มีบทบาทในการพัฒนาสังคม</div></label>
+                        </div>
+                    </div>
                 </div>
-            `;
 
-            // Analysis
-            const lowScoresDiv = document.getElementById('lowScores');
-            lowScoresDiv.innerHTML = `
-                <h3>✨ การวิเคราะห์เพิ่มเติม</h3>
-                <p>ขอบคุณ <strong>${personalInfo.fullName}</strong> ที่ใช้เวลาประเมินความสมดุลชีวิต</p>
-                <p>ในการประเมินครั้งนี้คุณได้ประเมิน ${validSectionCount} ด้าน จากทั้งหมด 12 ด้านของชีวิต</p>
-                <p>สำหรับระบบเต็มรูปแบบจะมีครบทั้ง 12 ด้าน เพื่อให้ได้ภาพรวมที่สมบูรณ์ที่สุด</p>
-            `;
-
-            // Scroll to results
-            document.getElementById('results').scrollIntoView({behavior: 'smooth'});
-        }
-
-        // สร้าง Radar Chart - แก้ไขปัญหาการแสดงผล
-        async function createRadarChart(scores) {
-            // รอให้ Chart.js โหลดเสร็จ
-            if (!chartJSLoaded) {
-                await waitForChartJS();
-            }
-
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            
-            // ทำลาย chart เก่าก่อน (ถ้ามี)
-            if (window.radarChartInstance) {
-                window.radarChartInstance.destroy();
-            }
-
-            const labels = scores.map(score => score.name);
-            const data = scores.map(score => score.score);
-            const backgroundColors = data.map(score => {
-                if (score >= 23) return 'rgba(76, 175, 80, 0.6)';
-                else if (score >= 18) return 'rgba(139, 195, 74, 0.6)';
-                else if (score >= 11) return 'rgba(255, 152, 0, 0.6)';
-                else return 'rgba(244, 67, 54, 0.6)';
-            });
-            
-            try {
-                window.radarChartInstance = new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'คะแนนของคุณ',
-                            data: data,
-                            borderColor: 'rgba(102, 126, 234, 1)',
-                            backgroundColor: 'rgba(102, 126, 234, 0.25)',
-                            borderWidth: 3,
-                            pointBackgroundColor: backgroundColors,
-                            pointBorderColor: 'rgba(102, 126, 234, 1)',
-                            pointBorderWidth: 2,
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgba(102, 126, 234, 1)',
-                            pointRadius: 6,
-                            pointHoverRadius: 8,
-                            tension: 0.1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: '#333',
-                                    font: {
-                                        size: window.innerWidth < 768 ? 11 : 13,
-                                        weight: 'bold'
-                                    },
-                                    padding: 12
-                                }
-                            },
-                            tooltip: {
-                                backgroundColor: 'rgba(0,0,0,0.8)',
-                                titleColor: '#fff',
-                                bodyColor: '#fff',
-                                cornerRadius: 8,
-                                displayColors: true,
-                                callbacks: {
-                                    label: function(context) {
-                                        const score = context.parsed.r;
-                                        let level = '';
-                                        if (score >= 23) level = 'ยอดเยี่ยม';
-                                        else if (score >= 18) level = 'ดี';
-                                        else if (score >= 11) level = 'ปานกลาง';
-                                        else level = 'ต้องปรับปรุง';
-                                        
-                                        return `${context.label}: ${score}/25 คะแนน (${level})`;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            r: {
-                                angleLines: {
-                                    color: 'rgba(0, 0, 0, 0.15)',
-                                    lineWidth: 1
-                                },
-                                grid: {
-                                    color: 'rgba(0, 0, 0, 0.1)',
-                                    lineWidth: 1
-                                },
-                                pointLabels: {
-                                    color: '#333',
-                                    font: {
-                                        size: window.innerWidth < 768 ? 9 : 11,
-                                        weight: '600'
-                                    }
-                                },
-                                ticks: {
-                                    display: true,
-                                    color: '#666',
-                                    backdropColor: 'rgba(255, 255, 255, 0.9)',
-                                    backdropPadding: 4,
-                                    font: {
-                                        size: window.innerWidth < 768 ? 8 : 10,
-                                        weight: '500'
-                                    },
-                                    stepSize: 5,
-                                    callback: function(value) {
-                                        return value;
-                                    }
-                                },
-                                min: 0,
-                                max: 25,
-                                beginAtZero: true
-                            }
-                        },
-                        interaction: {
-                            intersect: false,
-                            mode: 'nearest'
-                        },
-                        animation: {
-                            duration: 1500,
-                            easing: 'easeInOutQuart'
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error('Error generating detailed PDF:', error);
-                showError('เกิดข้อผิดพลาดในการสร้าง PDF รายละเอียด: ' + error.message);
-            }
-        }
-
-        // ดาวน์โหลดข้อมูลเป็น JSON - แก้ไขแล้ว
-        function downloadJSON() {
-            if (!currentResults) {
-                showError('ไม่พบข้อมูลที่จะดาวน์โหลด กรุณาคำนวณผลก่อน');
-                return;
-            }
-
-            try {
-                const dataStr = JSON.stringify(currentResults, null, 2);
-                const dataBlob = new Blob([dataStr], {type: 'application/json'});
-                
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(dataBlob);
-                const fileName = `wheel-of-life-data-${currentResults.personalInfo.fullName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.json`;
-                link.download = fileName;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(link.href);
-
-                // แสดงข้อความสำเร็จ
-                const statusElement = document.getElementById('saveStatus');
-                statusElement.innerHTML = '✅ ดาวน์โหลด JSON สำเร็จ!';
-                statusElement.className = 'save-status success';
-                statusElement.style.display = 'block';
-                setTimeout(() => {
-                    statusElement.style.display = 'none';
-                }, 3000);
-            } catch (error) {
-                console.error('Error downloading JSON:', error);
-                showError('เกิดข้อผิดพลาดในการดาวน์โหลด JSON');
-            }
-        }
-
-        // ดาวน์โหลดเป็น PDF สรุป - แก้ไขแล้ว
-        function downloadPDF() {
-            if (!currentResults) {
-                showError('ไม่พบข้อมูลที่จะดาวน์โหลด กรุณาคำนวณผลก่อน');
-                return;
-            }
-
-            try {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                
-                doc.setFontSize(20);
-                doc.text('Wheel of Life Assessment Summary', 20, 30);
-                
-                doc.setFontSize(14);
-                let yPosition = 50;
-                
-                // ข้อมูลส่วนบุคคล
-                doc.text(`Name: ${currentResults.personalInfo.fullName}`, 20, yPosition);
-                yPosition += 10;
-                if (currentResults.personalInfo.organization) {
-                    doc.text(`Organization: ${currentResults.personalInfo.organization}`, 20, yPosition);
-                    yPosition += 10;
-                }
-                doc.text(`Email: ${currentResults.personalInfo.email}`, 20, yPosition);
-                yPosition += 10;
-                doc.text(`Date: ${new Date(currentResults.timestamp).toLocaleDateString('th-TH')}`, 20, yPosition);
-                yPosition += 10;
-                doc.text(`Average Score: ${currentResults.averageScore.toFixed(1)}/25`, 20, yPosition);
-                yPosition += 20;
-                
-                // คะแนนแต่ละด้าน
-                doc.setFontSize(16);
-                doc.text('Detailed Scores:', 20, yPosition);
-                yPosition += 15;
-                
-                doc.setFontSize(12);
-                currentResults.scores.forEach((score, index) => {
-                    doc.text(`${index + 1}. ${score.name}: ${score.score}/25`, 25, yPosition);
-                    yPosition += 8;
-                });
-                
-                // บันทึกไฟล์
-                const fileName = `wheel-of-life-summary-${currentResults.personalInfo.fullName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
-                doc.save(fileName);
-
-                // แสดงข้อความสำเร็จ
-                const statusElement = document.getElementById('saveStatus');
-                statusElement.innerHTML = '✅ ดาวน์โหลด PDF สรุปสำเร็จ!';
-                statusElement.className = 'save-status success';
-                statusElement.style.display = 'block';
-                setTimeout(() => {
-                    statusElement.style.display = 'none';
-                }, 3000);
-
-            } catch (error) {
-                console.error('Error generating PDF summary:', error);
-                showError('เกิดข้อผิดพลาดในการสร้าง PDF สรุป: ' + error.message);
-            }
-        }
-
-        // พิมพ์ผลลัพธ์
-        function printResults() {
-            if (!currentResults) {
-                showError('ไม่พบข้อมูลที่จะพิมพ์ กรุณาคำนวณผลก่อน');
-                return;
-            }
-            window.print();
-        }
-
-        // Responsive chart updates
-        window.addEventListener('resize', function() {
-            if (window.radarChartInstance) {
-                window.radarChartInstance.resize();
-            }
-        });
-    </script>
-    
-    <!-- Google Forms Integration Guide -->
-    <!--
-    วิธีการเชื่อมต่อกับ Google Forms:
-
-    1. สร้าง Google Form ใหม่ที่ https://forms.google.com
-    2. เพิ่มฟิลด์ต่อไปนี้:
-       - ชื่อ-นามสกุล (Short answer)
-       - หน่วยงาน (Short answer)
-       - อีเมล์ (Short answer)
-       - คะแนนเฉลี่ย (Short answer)
-       - คะแนนรวม (Short answer)
-       - วันที่ประเมิน (Short answer)
-
-    3. คลิกที่ form ที่สร้าง > ส่ง > เลือก link icon
-    4. คัดลอก URL และแปลงเป็น format นี้:
-       จาก: https://docs.google.com/forms/d/FORM_ID/viewform
-       เป็น: https://docs.google.com/forms/d/e/FORM_ID/formResponse
-
-    5. ดู entry IDs:
-       - กด F12 > Elements > ค้นหา "entry."
-       - คัดลอก entry IDs (เช่น entry.123456789)
-
-    6. แทนที่ในโค้ด:
-       - แทนที่ GOOGLE_FORM_URL
-       - แทนที่ entry IDs ใน formData.append()
-
-    7. ยกเลิก comment ใน saveToGoogleSheets function
-    -->
-</body>
-</html> creating radar chart:', error);
-                document.querySelector('.radar-chart-container').innerHTML = `
-                    <h3>📊 Wheel of Life - ภาพรวมความสมดุลชีวิต</h3>
-                    <p style="color: #f44336; padding: 20px;">ไม่สามารถสร้างกราฟได้ในขณะนี้ แต่คุณยังสามารถดาวน์โหลดข้อมูลในรูปแบบอื่นได้</p>
-                `;
-            }
-        }
-
-        // Google Sheets Integration - ใช้งานได้จริง
-        async function saveToGoogleSheets(personalInfo, scores, averageScore) {
-            const statusElement = document.getElementById('saveStatus');
-            statusElement.innerHTML = '<div class="loading"></div> กำลังบันทึกข้อมูลลงระบบ...';
-            statusElement.className = 'save-status';
-            statusElement.style.display = 'block';
-
-            try {
-                // เตรียมข้อมูลสำหรับบันทึก
-                const dataToSave = {
-                    timestamp: personalInfo.timestamp,
-                    fullName: personalInfo.fullName,
-                    organization: personalInfo.organization || 'ไม่ระบุ',
-                    email: personalInfo.email,
-                    averageScore: averageScore.toFixed(2),
-                    totalScores: scores.reduce((sum, score) => sum + score.score, 0),
-                    sectionsEvaluated: scores.length,
-                    healthScore: scores.find(s => s.name === 'สุขภาพกายและสุขภาพใจ')?.score || '',
-                    careerScore: scores.find(s => s.name === 'อาชีพการงาน')?.score || '',
-                    financeScore: scores.find(s => s.name === 'การเงินและความมั่นคงทางการเงิน')?.score || ''
-                };
-
-                console.log('ข้อมูลที่จะบันทึก:', dataToSave);
-
-                // จำลองการบันทึกสำเร็จ
-                setTimeout(() => {
-                    statusElement.innerHTML = '✅ บันทึกข้อมูลสำเร็จ! ข้อมูลถูกเก็บไว้ในระบบแล้ว';
-                    statusElement.className = 'save-status success';
-                    setTimeout(() => {
-                        statusElement.style.display = 'none';
-                    }, 5000);
-                }, 2000);
-
-            } catch (error) {
-                console.error('Error saving to Google Sheets:', error);
-                statusElement.innerHTML = '⚠️ ไม่สามารถบันทึกข้อมูลได้ในขณะนี้ แต่คุณยังสามารถดาวน์โหลดผลลัพธ์ได้';
-                statusElement.className = 'save-status error';
-                setTimeout(() => {
-                    statusElement.style.display = 'none';
-                }, 8000);
-            }
-        }
-
-        // ดาวน์โหลดกราฟเป็นรูปภาพ - แก้ไขแล้ว
-        function downloadChartImage() {
-            if (!window.radarChartInstance) {
-                showError('ไม่พบกราฟที่จะดาวน์โหลด กรุณาคำนวณผลก่อน');
-                return;
-            }
-
-            try {
-                // รอให้ chart render เสร็จก่อน
-                setTimeout(() => {
-                    const canvas = document.getElementById('radarChart');
+                <!-- Section 6: Love & Romance -->
+                <div class="section" data-section="6">
+                    <div class="section-indicator">ด้านที่ 6 จาก 12</div>
+                    <div class="section-title">
+                        <div class="section-number">6</div>
+                        ความรักและความสัมพันธ์คู่ชีวิต
+                    </div>
+                    <div class="section-description">ประเมินความสัมพันธ์รักใคร่ และคู่ชีวิต (หากมี)</div>
                     
-                    // สร้าง canvas ใหม่เพื่อเพิ่มพื้นหลังสีขาว
-                    const tempCanvas = document.createElement('canvas');
-                    const tempCtx = tempCanvas.getContext('2d');
-                    tempCanvas.width = canvas.width;
-                    tempCanvas.height = canvas.height;
-                    
-                    // เพิ่มพื้นหลังสีขาว
-                    tempCtx.fillStyle = '#ffffff';
-                    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-                    
-                    // วาดกราฟลงไป
-                    tempCtx.drawImage(canvas, 0, 0);
-                    
-                    // สร้างลิงก์ดาวน์โหลด
-                    const link = document.createElement('a');
-                    const fileName = `wheel-of-life-chart-${personalInfo.fullName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.png`;
-                    link.download = fileName;
-                    link.href = tempCanvas.toDataURL('image/png', 1.0);
-                    
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                    // แสดงข้อความสำเร็จ
-                    showError(''); // ล้าง error
-                    const statusElement = document.getElementById('saveStatus');
-                    statusElement.innerHTML = '✅ ดาวน์โหลดกราฟสำเร็จ!';
-                    statusElement.className = 'save-status success';
-                    statusElement.style.display = 'block';
-                    setTimeout(() => {
-                        statusElement.style.display = 'none';
-                    }, 3000);
-                }, 500);
-                
-            } catch (error) {
-                console.error('Error downloading chart:', error);
-                showError('เกิดข้อผิดพลาดในการดาวน์โหลดกราฟ: ' + error.message);
-            }
-        }
+                    <div class="question">
+                        <div class="question-text">6.1 คุณพอใจกับสถานะความสัมพันธ์รักใคร่ปัจจุบันแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="love_1" value="0"><div class="option-text">ไม่มีความสัมพันธ์รักใคร่ และรู้สึกเหงา หรือมีความสัมพันธ์ที่มีปัญหาร้ายแรง</div></label>
+                            <label class="option"><input type="radio" name="love_1" value="1"><div class="option-text">ไม่พอใจกับสถานะปัจจุบัน หาคู่ไม่ได้ หรือความสัมพันธ์มีปัญหามาก</div></label>
+                            <label class="option"><input type="radio" name="love_1" value="2"><div class="option-text">พอใจปานกลาง อาจโสดแต่ไม่เป็นปัญหา หรือมีความสัมพันธ์แต่ไม่มั่นใจ</div></label>
+                            <label class="option"><input type="radio" name="love_1" value="3"><div class="option-text">ค่อนข้างพอใจ มีความสัมพันธ์ที่ดีพอสมควร หรือโสดแต่มีความสุข</div></label>
+                            <label class="option"><input type="radio" name="love_1" value="4"><div class="option-text">พอใจมาก มีความสัมพันธ์ที่ดี หรือโสดโดยการเลือกและมีความสุข</div></label>
+                            <label class="option"><input type="radio" name="love_1" value="5"><div class="option-text">พอใจอย่างมาก มีคู่ชีวิตที่ยอดเยี่ยม หรือโสดและมีความสุขกับการใช้ชีวิต</div></label>
+                        </div>
+                    </div>
 
-        // ดาวน์โหลด PDF รายละเอียด - รูปแบบสวยงามเหมือนเว็บ
-        function downloadDetailedPDF() {
-            if (!currentResults) {
-                showError('ไม่พบข้อมูลที่จะดาวน์โหลด กรุณาคำนวณผลก่อน');
-                return;
-            }
+                    <div class="question">
+                        <div class="question-text">6.2 การสื่อสารระหว่างคุณกับคู่ชีวิต/คนรักเป็นอย่างไร? (หากไม่มี ให้ประเมินจากความสัมพันธ์ล่าสุด)</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="love_2" value="0"><div class="option-text">ไม่สามารถสื่อสารกันได้ มีปัญหาการสื่อสารร้ายแรง</div></label>
+                            <label class="option"><input type="radio" name="love_2" value="1"><div class="option-text">สื่อสารกันได้ยาก มักเกิดความเข้าใจผิด</div></label>
+                            <label class="option"><input type="radio" name="love_2" value="2"><div class="option-text">สื่อสารกันได้บ้าง แต่ไม่ลึกซึ้ง</div></label>
+                            <label class="option"><input type="radio" name="love_2" value="3"><div class="option-text">สื่อสารกันได้ดีพอสมควร เข้าใจกันในระดับหนึ่ง</div></label>
+                            <label class="option"><input type="radio" name="love_2" value="4"><div class="option-text">สื่อสารกันได้ดี เปิดใจและเข้าใจกัน</div></label>
+                            <label class="option"><input type="radio" name="love_2" value="5"><div class="option-text">สื่อสารกันได้ยอดเยี่ยม เข้าใจกันลึกซึ้งและจริงใจ</div></label>
+                        </div>
+                    </div>
 
-            try {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-                
-                // การตั้งค่าสำหรับภาษาไทย
-                doc.setFont("helvetica");
-                
-                // สีธีม
-                const primaryColor = [102, 126, 234];
-                const accentColor = [240, 147, 251];
-                const textColor = [51, 51, 51];
-                const lightBg = [248, 249, 250];
-                
-                // พื้นหลัง Gradient (จำลอง)
-                doc.setFillColor(247, 248, 250);
-                doc.rect(0, 0, 210, 297, 'F');
-                
-                // Header สีสวยเหมือนเว็บ
-                doc.setFillColor(102, 126, 234);
-                doc.rect(0, 0, 210, 40, 'F');
-                
-                // หัวเรื่องสีขาว
-                doc.setFontSize(18);
-                doc.setTextColor(255, 255, 255);
-                doc.text('ผลการประเมินความสมดุลชีวิต 12 ด้าน', 105, 20, { align: 'center' });
-                doc.setFontSize(14);
-                doc.text('☸️ Wheel of Life Assessment', 105, 30, { align: 'center' });
-                
-                let yPos = 55;
-                
-                // ข้อมูลส่วนบุคคล - กล่องสีสวย
-                doc.setFillColor(248, 249, 250);
-                doc.setDrawColor(102, 126, 234);
-                doc.setLineWidth(0.5);
-                doc.rect(15, yPos - 5, 180, 35, 'FD');
-                
-                doc.setFontSize(14);
-                doc.setTextColor(102, 126, 234);
-                doc.text('📝 ข้อมูลผู้ประเมิน', 20, yPos + 3);
-                
-                doc.setFontSize(11);
-                doc.setTextColor(51, 51, 51);
-                yPos += 12;
-                
-                const assessmentDate = new Date(currentResults.timestamp).toLocaleDateString('th-TH', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    weekday: 'long'
-                });
-                
-                doc.text(`ชื่อ-นามสกุล: ${currentResults.personalInfo.fullName}`, 25, yPos);
-                yPos += 6;
-                if (currentResults.personalInfo.organization) {
-                    doc.text(`หน่วยงาน: ${currentResults.personalInfo.organization}`, 25, yPos);
-                    yPos += 6;
-                }
-                doc.text(`อีเมล์: ${currentResults.personalInfo.email}`, 25, yPos);
-                yPos += 6;
-                doc.text(`วันที่ประเมิน: ${assessmentDate}`, 25, yPos);
-                
-                yPos += 20;
-                
-                // คะแนนโดยรวม - กล่องเด่น
-                doc.setFillColor(240, 147, 251);
-                doc.rect(15, yPos - 5, 180, 25, 'F');
-                
-                doc.setFontSize(16);
-                doc.setTextColor(255, 255, 255);
-                doc.text('📊 คะแนนเฉลี่ยโดยรวม', 20, yPos + 5);
-                
-                doc.setFontSize(24);
-                doc.setFont("helvetica", "bold");
-                doc.text(`${currentResults.averageScore.toFixed(1)}/25`, 150, yPos + 8);
-                doc.text('คะแนน', 150, yPos + 16);
-                
-                yPos += 35;
-                
-                // คะแนนแต่ละด้าน - รูปแบบสวยงาม
-                doc.setFontSize(14);
-                doc.setTextColor(102, 126, 234);
-                doc.setFont("helvetica", "bold");
-                doc.text('📈 คะแนนรายละเอียดแต่ละด้าน', 20, yPos);
-                
-                yPos += 10;
-                
-                currentResults.scores.forEach((score, index) => {
-                    // กล่องคะแนนแต่ละด้าน
-                    doc.setFillColor(255, 255, 255);
-                    doc.setDrawColor(230, 230, 230);
-                    doc.setLineWidth(0.3);
-                    doc.rect(15, yPos, 180, 12, 'FD');
-                    
-                    // แถบสี progress bar
-                    const percentage = (score.score / score.maxScore) * 100;
-                    let barColor = [244, 67, 54]; // แดง
-                    if (score.score >= 23) barColor = [76, 175, 80]; // เขียว
-                    else if (score.score >= 18) barColor = [139, 195, 74]; // เขียวอ่อน
-                    else if (score.score >= 11) barColor = [255, 152, 0]; // ส้ม
-                    
-                    doc.setFillColor(...barColor);
-                    const barWidth = (percentage / 100) * 160;
-                    doc.rect(25, yPos + 8, barWidth, 3, 'F');
-                    
-                    // ข้อความ
-                    doc.setFontSize(10);
-                    doc.setTextColor(51, 51, 51);
-                    doc.setFont("helvetica", "normal");
-                    doc.text(`${index + 1}. ${score.name}`, 20, yPos + 6);
-                    
-                    doc.setFont("helvetica", "bold");
-                    doc.setTextColor(102, 126, 234);
-                    doc.text(`${score.score}/25`, 170, yPos + 6);
-                    
-                    // ระดับ
-                    let level = '';
-                    if (score.score >= 23) level = 'ยอดเยี่ยม';
-                    else if (score.score >= 18) level = 'ดี';
-                    else if (score.score >= 11) level = 'ปานกลาง';
-                    else level = 'ต้องปรับปรุง';
-                    
-                    doc.setFontSize(8);
-                    doc.setTextColor(102, 102, 102);
-                    doc.text(`(${level})`, 170, yPos + 10);
-                    
-                    yPos += 15;
-                });
-                
-                // เพิ่มหน้าใหม่สำหรับกราฟและการวิเคราะห์
-                doc.addPage();
-                
-                // พื้นหลังหน้าใหม่
-                doc.setFillColor(247, 248, 250);
-                doc.rect(0, 0, 210, 297, 'F');
-                
-                // Header หน้าที่ 2
-                doc.setFillColor(102, 126, 234);
-                doc.rect(0, 0, 210, 25, 'F');
-                
-                doc.setFontSize(16);
-                doc.setTextColor(255, 255, 255);
-                doc.text('การวิเคราะห์และกราฟ Wheel of Life', 105, 16, { align: 'center' });
-                
-                yPos = 40;
-                
-                // เพิ่มกราฟ
-                if (window.radarChartInstance) {
-                    try {
-                        const canvas = document.getElementById('radarChart');
-                        
-                        // สร้าง canvas ใหม่เพื่อเพิ่มพื้นหลังสีขาว
-                        const tempCanvas = document.createElement('canvas');
-                        const tempCtx = tempCanvas.getContext('2d');
-                        tempCanvas.width = canvas.width;
-                        tempCanvas.height = canvas.height;
-                        
-                        // เพิ่มพื้นหลังสีขาว
-                        tempCtx.fillStyle = '#ffffff';
-                        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-                        
-                        // วาดกราฟลงไป
-                        tempCtx.drawImage(canvas, 0, 0);
-                        
-                        const chartImageData = tempCanvas.toDataURL('image/png', 1.0);
-                        
-                        // กรอบรอบกราฟ
-                        doc.setFillColor(255, 255, 255);
-                        doc.setDrawColor(102, 126, 234);
-                        doc.setLineWidth(1);
-                        doc.rect(25, yPos, 160, 120, 'FD');
-                        
-                        doc.addImage(chartImageData, 'PNG', 30, yPos + 5, 150, 110);
-                        
-                        yPos += 130;
-                    } catch (chartError) {
-                        console.warn('Could not add chart to PDF:', chartError);
-                    }
-                }
-                
-                // การวิเคราะห์ผล
-                doc.setFillColor(248, 249, 250);
-                doc.setDrawColor(102, 126, 234);
-                doc.rect(15, yPos, 180, 60, 'FD');
-                
-                doc.setFontSize(14);
-                doc.setTextColor(102, 126, 234);
-                doc.setFont("helvetica", "bold");
-                doc.text('🎯 การวิเคราะห์ผลการประเมิน', 20, yPos + 10);
-                
-                doc.setFontSize(11);
-                doc.setTextColor(51, 51, 51);
-                doc.setFont("helvetica", "normal");
-                
-                let analysisText = '';
-                let analysisIcon = '';
-                if (currentResults.averageScore >= 23) {
-                    analysisText = '🎉 ยอดเยี่ยม! คุณมีคุณภาพชีวิตที่สมบูรณ์และเป็นแบบอย่างที่ดี ควรรักษาและแบ่งปันประสบการณ์ให้ผู้อื่น การพัฒนาต่อไปควรมุ่งเน้นไปที่การช่วยเหลือผู้อื่นและการเป็นผู้นำด้านคุณภาพชีวิต';
-                } else if (currentResults.averageScore >= 18) {
-                    analysisText = '👍 ดีมาก! คุณมีคุณภาพชีวิตที่ดีในหลายด้าน ยังมีพื้นที่สำหรับการพัฒนาให้ดียิ่งขึ้น แนะนำให้มุ่งเน้นพัฒนาด้านที่ได้คะแนนต่ำเป็นพิเศษ และรักษาจุดแข็งที่มีอยู่';
-                } else if (currentResults.averageScore >= 11) {
-                    analysisText = '⚖️ ปานกลาง คุณมีจุดแข็งบางด้าน แต่ยังมีหลายด้านที่ต้องพัฒนาอย่างต่อเนื่อง ควรจัดลำดับความสำคัญและเริ่มพัฒนาทีละด้านอย่างเป็นระบบ';
-                } else {
-                    analysisText = '🔥 ต้องการการปรับปรุง คุณควรให้ความสำคัญกับการพัฒนาคุณภาพชีวิตอย่างเร่งด่วน แนะนำให้เริ่มจากด้านพื้นฐาน เช่น สุขภาพและการเงิน ก่อนไปพัฒนาด้านอื่น ๆ';
-                }
-                
-                const splitText = doc.splitTextToSize(analysisText, 170);
-                doc.text(splitText, 20, yPos + 20);
-                
-                // เกณฑ์การให้คะแนน
-                yPos += 70;
-                doc.setFillColor(255, 255, 255);
-                doc.setDrawColor(230, 230, 230);
-                doc.rect(15, yPos, 180, 35, 'FD');
-                
-                doc.setFontSize(12);
-                doc.setTextColor(102, 126, 234);
-                doc.setFont("helvetica", "bold");
-                doc.text('📋 เกณฑ์การให้คะแนน', 20, yPos + 8);
-                
-                doc.setFontSize(9);
-                doc.setTextColor(51, 51, 51);
-                doc.setFont("helvetica", "normal");
-                doc.t
+                    <div class="question">
+                        <div class="question-text">6.3 คุณให้เวลาและความสนใจกับเรื่องความรักแค่ไหน?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="love_3" value="0"><div class="option-text">ไม่ให้เวลาหรือความสนใจเรื่องความรักเลย</div></label>
+                            <label class="option"><input type="radio" name="love_3" value="1"><div class="option-text">ให้เวลาและความสนใจน้อยมาก</div></label>
+                            <label class="option"><input type="radio" name="love_3" value="2"><div class="option-text">ให้เวลาและความสนใจปานกลาง</div></label>
+                            <label class="option"><input type="radio" name="love_3" value="3"><div class="option-text">ให้เวลาและความสนใจดีพอสมควร</div></label>
+                            <label class="option"><input type="radio" name="love_3" value="4"><div class="option-text">ให้เวลาและความสนใจได้ดี มีการดูแลความสัมพันธ์</div></label>
+                            <label class="option"><input type="radio" name="love_3" value="5"><div class="option-text">ให้เวลาและความสนใจอย่างเต็มที่ เป็นความสำคัญสูงในชีวิต</div></label>
+                        </div>
+                    </div>
 
-            } catch (error) {
-                console.error('Error
+                    <div class="question">
+                        <div class="question-text">6.4 ความไว้วางใจและความจริงใจในความสัมพันธ์เป็นอย่างไร?</div>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="love_4" value="0"><div class="option-text">ไม่มีความไว้วางใจ มีปัญหาเรื่องความจริงใจ
