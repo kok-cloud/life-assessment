@@ -180,6 +180,29 @@
             line-height: 1.5;
         }
 
+        .personal-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+            margin-top: 10px;
+        }
+
+        .personal-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .personal-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
         .navigation {
             display: flex;
             justify-content: space-between;
@@ -403,6 +426,42 @@
             font-size: 0.9em;
         }
 
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -495,6 +554,15 @@
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <h3>กำลังบันทึกข้อมูล...</h3>
+            <p>กรุณารอสักครู่</p>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
             <h1>พัฒนาความสมดุลย์ทั้ง 12 ด้านของชีวิต</h1>
@@ -507,8 +575,46 @@
         <div class="content">
             <form id="lifeAssessmentForm">
                 
+                <!-- Section 0: Personal Information -->
+                <div class="section active" data-section="0">
+                    <div class="section-indicator">ข้อมูลส่วนตัว</div>
+                    <div class="section-title">
+                        <div class="section-number">📝</div>
+                        ข้อมูลส่วนตัว
+                    </div>
+                    <div class="section-description">กรุณากรอกข้อมูลส่วนตัวเพื่อใช้ในการสร้างรายงานผลการประเมิน</div>
+                    
+                    <div class="question">
+                        <div class="question-text">ชื่อ-นามสกุล *</div>
+                        <input type="text" id="fullName" class="personal-input" placeholder="เช่น นายสมชาย ใจดี" required>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">หน่วยงาน/องค์กร/บริษัท *</div>
+                        <input type="text" id="organization" class="personal-input" placeholder="เช่น บริษัท ABC จำกัด หรือ มหาวิทยาลัยXYZ" required>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">อีเมล *</div>
+                        <input type="email" id="email" class="personal-input" placeholder="เช่น example@email.com" required>
+                    </div>
+
+                    <div class="question">
+                        <div class="question-text">ตำแหน่ง/หน้าที่ (ไม่บังคับ)</div>
+                        <input type="text" id="position" class="personal-input" placeholder="เช่น ผู้จัดการ, นักวิจัย, นักเรียน">
+                    </div>
+
+                    <div style="margin-top: 25px; padding: 15px; background: #e8f0fe; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <p style="margin: 0; color: #333; font-size: 0.95em;">
+                            <strong>🔒 การปกป้องข้อมูลส่วนบุคคล:</strong><br>
+                            ข้อมูลส่วนตัวที่คุณกรอกจะถูกใช้เฉพาะในการสร้างรายงานผลการประเมินและเก็บไว้ในระบบเพื่อการวิเคราะห์ผลเท่านั้น 
+                            ข้อมูลจะถูกเก็บอย่างปลอดภัยและไม่เผยแพร่ต่อบุคคลภายนอก
+                        </p>
+                    </div>
+                </div>
+                
                 <!-- Section 1: Health & Fitness -->
-                <div class="section active" data-section="1">
+                <div class="section" data-section="1">
                     <div class="section-indicator">ด้านที่ 1 จาก 12</div>
                     <div class="section-title">
                         <div class="section-number">1</div>
@@ -1318,829 +1424,4 @@
                             <label class="option"><input type="radio" name="vision_3" value="2"><div class="option-text">มั่นใจในบางจุด แต่เมื่อเจออุปสรรคจะท้อถอยง่าย ขาดแรงผลักดันที่มั่นคง</div></label>
                             <label class="option"><input type="radio" name="vision_3" value="3"><div class="option-text">เชื่อมั่นในศักยภาพระดับหนึ่ง แต่ยังขาดความกล้าหาญหรือความต่อเนื่องในการลงมือทำ</div></label>
                             <label class="option"><input type="radio" name="vision_3" value="4"><div class="option-text">มั่นใจในความสามารถ และมีความพยายามต่อเนื่อง แม้จะยังไม่เห็นผลลัพธ์ชัดเจน</div></label>
-                            <label class="option"><input type="radio" name="vision_3" value="5"><div class="option-text">มั่นใจอย่างเต็มเปี่ยมในศักยภาพตัวเอง พร้อมลงมือทำอย่างจริงจัง และเชื่อมั่นว่าต้องสำเร็จ</div></label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">12.4 คุณมีแผนการดำเนินชีวิตที่ชัดเจนเพื่อไปสู่วิสัยทัศน์นั้นหรือไม่?</div>
-                        <div class="options">
-                            <label class="option"><input type="radio" name="vision_4" value="0"><div class="option-text">ไม่มีแผนใด ๆ ทั้งสิ้น ใช้ชีวิตตามสถานการณ์ ไม่มีการวางแผนระยะยาว</div></label>
-                            <label class="option"><input type="radio" name="vision_4" value="1"><div class="option-text">ไม่รู้จะเริ่มต้นอย่างไร หรือไม่เคยคิดถึงการวางแผนเลย</div></label>
-                            <label class="option"><input type="radio" name="vision_4" value="2"><div class="option-text">มีแผนในใจบ้างแต่ยังไม่ได้ลงมือวางแผนเป็นรูปธรรม</div></label>
-                            <label class="option"><input type="radio" name="vision_4" value="3"><div class="option-text">มีแผนการดำเนินชีวิตบางส่วน แต่ยังไม่ครอบคลุมทุกด้านที่เกี่ยวข้องกับวิสัยทัศน์ชีวิต</div></label>
-                            <label class="option"><input type="radio" name="vision_4" value="4"><div class="option-text">วางแผนชีวิตอย่างชัดเจนในหลายด้าน และกำลังลงมือทำตามแผนเหล่านั้น</div></label>
-                            <label class="option"><input type="radio" name="vision_4" value="5"><div class="option-text">มี Life Master Plan ครบถ้วน เป็นขั้นตอนชัดเจนในทุกมิติ และกำลังดำเนินตามแผนอย่างต่อเนื่อง</div></label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">12.5 คุณรู้สึกมีความสุขกับเส้นทางชีวิตที่กำลังเดินอยู่ตอนนี้มากแค่ไหน?</div>
-                        <div class="options">
-                            <label class="option"><input type="radio" name="vision_5" value="0"><div class="option-text">ไม่รู้สึกมีความสุขเลย รู้สึกหลงทาง เครียด และผิดหวังกับชีวิตปัจจุบัน</div></label>
-                            <label class="option"><input type="radio" name="vision_5" value="1"><div class="option-text">รู้สึกไม่มีความหมายในชีวิต หรือว่าชีวิตไม่ได้ไปไหนเลย</div></label>
-                            <label class="option"><input type="radio" name="vision_5" value="2"><div class="option-text">มีความสุขในบางช่วงเวลา แต่ยังรู้สึกว่าชีวิตขาดความหมายหรือความตื่นเต้นอยู่บ่อย ๆ</div></label>
-                            <label class="option"><input type="radio" name="vision_5" value="3"><div class="option-text">มีความสุขในระดับหนึ่ง รู้ว่ากำลังเดินไปในทิศทางที่ดี แต่ยังมีบางเรื่องที่รู้สึกขาดหาย</div></label>
-                            <label class="option"><input type="radio" name="vision_5" value="4"><div class="option-text">มีความสุขกับชีวิตปัจจุบันและรู้สึกว่ากำลังก้าวหน้าไปสู่เป้าหมายในฝันอย่างมั่นคง</div></label>
-                            <label class="option"><input type="radio" name="vision_5" value="5"><div class="option-text">มีความสุขเต็มเปี่ยมกับทุกก้าวของชีวิต มั่นใจว่าชีวิตขณะนี้คือส่วนหนึ่งของเส้นทางสู่เป้าหมายที่ใฝ่ฝัน</div></label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="navigation">
-                    <button type="button" class="nav-btn" id="prevBtn" onclick="previousSection()" disabled>ย้อนกลับ</button>
-                    <button type="button" class="nav-btn" id="nextBtn" onclick="nextSection()">ถัดไป</button>
-                    <button type="button" class="calculate-btn" id="calculateBtn" onclick="calculateResults()">คำนวณผลคะแนน</button>
-                </div>
-            </form>
-
-            <div id="results" class="results">
-                <h2>ผลการประเมินความสมดุลชีวิต 12 ด้าน (☸️Wheel of Life)</h2>
-                <div class="overall-score">
-                    <span class="score" id="overallScore">0</span>
-                    <span class="label">คะแนนเฉลี่ยโดยรวม (จาก 25 คะแนน)</span>
-                </div>
-                <div class="score-breakdown" id="scoreBreakdown">
-                    <!-- Results will be populated here -->
-                </div>
-                
-                <div class="radar-chart-container">
-                    <h3>📊 Wheel of Life - ภาพรวมความสมดุลชีวิต 12 ด้าน</h3>
-                    <div style="position: relative; width: 100%; max-width: 600px; margin: 0 auto;">
-                        <canvas id="radarChart" class="chart-canvas"></canvas>
-                    </div>
-                    <div class="chart-controls">
-                        <button class="chart-download-btn" onclick="downloadChartImage()">📸 ดาวน์โหลดกราฟเป็นรูปภาพ</button>
-                        <button class="chart-download-btn" onclick="downloadDetailedPDF()">📊 ดาวน์โหลด PDF พร้อมกราฟ</button>
-                    </div>
-                    <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
-                        ☸️ Wheel of Life แสดงความสมดุลใน 12 ด้านของชีวิต โดยแกนกลางคือ 0 คะแนน และขอบนอกคือ 25 คะแนน<br>
-                        <span style="color: #4CAF50;">●</span> สีเขียว: ยอดเยี่ยม (23-25) | 
-                        <span style="color: #8BC34A;">●</span> สีเขียวอ่อน: ดี (18-22) | 
-                        <span style="color: #FF9800;">●</span> สีส้ม: ปานกลาง (11-17) | 
-                        <span style="color: #F44336;">●</span> สีแดง: ต้องปรับปรุง (0-10)
-                    </p>
-                </div>
-                
-                <div class="interpretation" id="interpretation">
-                    <!-- Interpretation will be populated here -->
-                </div>
-                
-                <div class="download-section">
-                    <h3>💾 ดาวน์โหลดผลลัพธ์</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
-                        <button class="download-btn" onclick="downloadJSON()">📄 ดาวน์โหลด JSON</button>
-                        <button class="download-btn" onclick="downloadPDF()">📑 PDF สรุปอย่างย่อ</button>
-                        <button class="download-btn" onclick="downloadDetailedPDF()">📊 PDF รายละเอียดพร้อมกราฟ</button>
-                        <button class="download-btn" onclick="downloadChartImage()">📸 ภาพกราฟ PNG</button>
-                        <button class="download-btn" onclick="printResults()">🖨️ พิมพ์ผลลัพธ์</button>
-                    </div>
-                    <p style="color: rgba(255,255,255,0.8); font-size: 0.9em; text-align: center; margin-top: 15px;">
-                        💡 แนะนำ: ใช้ "PDF รายละเอียดพร้อมกราฟ" สำหรับรายงานที่สมบูรณ์ที่สุด
-                    </p>
-                </div>
-                
-                <div class="low-scores" id="lowScores">
-                    <!-- Low scoring areas will be highlighted here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let currentSection = 1;
-        const totalSections = 12;
-        let currentResults = null; // เก็บผลลัพธ์ปัจจุบันสำหรับดาวน์โหลด
-
-        // Navigation functionality
-        function showSection(sectionNumber) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Show target section
-            const targetSection = document.querySelector(`[data-section="${sectionNumber}"]`);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
-            
-            // Update progress bar
-            const progress = (sectionNumber / totalSections) * 100;
-            document.getElementById('headerProgress').style.width = progress + '%';
-            
-            // Update navigation buttons
-            document.getElementById('prevBtn').disabled = sectionNumber === 1;
-            document.getElementById('nextBtn').style.display = sectionNumber === totalSections ? 'none' : 'block';
-            document.getElementById('calculateBtn').style.display = sectionNumber === totalSections ? 'block' : 'none';
-        }
-
-        function nextSection() {
-            if (currentSection < totalSections) {
-                currentSection++;
-                showSection(currentSection);
-                window.scrollTo(0, 0);
-            }
-        }
-
-        function previousSection() {
-            if (currentSection > 1) {
-                currentSection--;
-                showSection(currentSection);
-                window.scrollTo(0, 0);
-            }
-        }
-
-        // Add interactive functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle option selection
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                option.addEventListener('click', function() {
-                    const name = this.querySelector('input').name;
-                    document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
-                        input.closest('.option').classList.remove('selected');
-                    });
-                    this.classList.add('selected');
-                });
-            });
-
-            // Initialize first section
-            showSection(1);
-        });
-
-        function calculateResults() {
-            const sections = [
-                {name: 'สุขภาพกายและสุขภาพใจ', prefix: 'health'},
-                {name: 'ชีวิตทางปัญญา', prefix: 'intellectual'},
-                {name: 'ชีวิตด้านอารมณ์', prefix: 'emotional'},
-                {name: 'คุณลักษณะนิสัยและค่านิยม', prefix: 'character'},
-                {name: 'จิตวิญญาณและความหมายของชีวิต', prefix: 'spiritual'},
-                {name: 'ความรักและความสัมพันธ์คู่ชีวิต', prefix: 'love'},
-                {name: 'บทบาทความเป็นพ่อแม่', prefix: 'parenting'},
-                {name: 'ชีวิตด้านสังคมและมิตรภาพ', prefix: 'social'},
-                {name: 'ชีวิตด้านการเงินและความมั่งคั่ง', prefix: 'financial'},
-                {name: 'ชีวิตด้านอาชีพและความสำเร็จในงาน', prefix: 'career'},
-                {name: 'คุณภาพชีวิต', prefix: 'quality'},
-                {name: 'วิสัยทัศน์ชีวิตโดยรวม', prefix: 'vision'}
-            ];
-
-            let totalScore = 0;
-            let validSectionCount = 0;
-            const scores = [];
-
-            sections.forEach(section => {
-                let sectionScore = 0;
-                let questionCount = 0;
-
-                for (let i = 1; i <= 5; i++) {
-                    const selected = document.querySelector(`input[name="${section.prefix}_${i}"]:checked`);
-                    if (selected) {
-                        sectionScore += parseInt(selected.value);
-                        questionCount++;
-                    }
-                }
-
-                if (questionCount > 0) {
-                    scores.push({
-                        name: section.name,
-                        score: sectionScore,
-                        maxScore: 25,
-                        answeredQuestions: questionCount
-                    });
-                    totalScore += sectionScore;
-                    validSectionCount++;
-                }
-            });
-
-            if (validSectionCount === 0) {
-                alert('กรุณาตอบคำถามอย่างน้อย 1 ด้าน');
-                return;
-            }
-
-            const averageScore = totalScore / validSectionCount;
-            displayResults(averageScore, scores, validSectionCount);
-        }
-
-        function displayResults(averageScore, scores, validSectionCount) {
-            // เก็บผลลัพธ์สำหรับดาวน์โหลด
-            currentResults = {
-                averageScore: averageScore,
-                scores: scores,
-                validSectionCount: validSectionCount,
-                timestamp: new Date().toISOString(),
-                totalPossibleScore: validSectionCount * 25
-            };
-
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('overallScore').textContent = averageScore.toFixed(1);
-
-            // Display section scores
-            const breakdown = document.getElementById('scoreBreakdown');
-            breakdown.innerHTML = '';
-            scores.forEach(score => {
-                const percentage = (score.score / score.maxScore) * 100;
-                const item = document.createElement('div');
-                item.className = 'score-item';
-                item.innerHTML = `
-                    <div class="score-item-title">${score.name}</div>
-                    <div class="score-item-score">${score.score}/25 คะแนน</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${percentage}%"></div>
-                    </div>
-                `;
-                breakdown.appendChild(item);
-            });
-
-            // สร้าง Radar Chart
-            createRadarChart(scores);
-
-            // Interpretation
-            const interpretation = document.getElementById('interpretation');
-            let interpretationText = '';
-            let color = '';
-
-            if (averageScore >= 23) {
-                interpretationText = '🎉 ยอดเยี่ยม! คุณมีคุณภาพชีวิตที่สมบูรณ์และเป็นแบบอย่างที่ดี ควรรักษาและแบ่งปันประสบการณ์ให้ผู้อื่น';
-                color = '#4CAF50';
-            } else if (averageScore >= 18) {
-                interpretationText = '👍 ดีมาก! คุณมีคุณภาพชีวิตที่ดีในหลายด้าน ยังมีพื้นที่สำหรับการพัฒนาให้ดียิ่งขึ้น';
-                color = '#8BC34A';
-            } else if (averageScore >= 11) {
-                interpretationText = '⚖️ ปานกลาง คุณมีจุดแข็งบางด้าน แต่ยังมีหลายด้านที่ต้องพัฒนาอย่างต่อเนื่อง';
-                color = '#FF9800';
-            } else {
-                interpretationText = '🔥 ต้องการการปรับปรุง คุณควรให้ความสำคัญกับการพัฒนาคุณภาพชีวิตอย่างเร่งด่วน';
-                color = '#F44336';
-            }
-
-            interpretation.innerHTML = `
-                <h3 style="color: ${color}">การวิเคราะห์ผล</h3>
-                <p>${interpretationText}</p>
-                <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                    <h4>เกณฑ์การให้คะแนน:</h4>
-                    <p><strong>23-25 คะแนน:</strong> ยอดเยี่ยม - สมบูรณ์แบบในด้านนี้</p>
-                    <p><strong>18-22 คะแนน:</strong> ดี - มีคุณภาพดีแต่ยังพัฒนาได้</p>
-                    <p><strong>11-17 คะแนน:</strong> ปานกลาง - ต้องพัฒนาอย่างต่อเนื่อง</p>
-                    <p><strong>0-10 คะแนน:</strong> ต้องปรับปรุง - ควรให้ความสำคัญเป็นพิเศษ</p>
-                </div>
-                <div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                    <h4>📊 สถิติการประเมิน:</h4>
-                    <p>• ประเมินทั้งหมด: ${validSectionCount} ด้าน จาก 12 ด้าน</p>
-                    <p>• คะแนนรวม: ${scores.reduce((sum, score) => sum + score.score, 0)} คะแนน</p>
-                    <p>• คะแนนเฉลี่ย: ${averageScore.toFixed(1)} คะแนน</p>
-                </div>
-            `;
-
-            // Low scores and high scores analysis
-            const lowScores = scores.filter(score => score.score < 15).sort((a, b) => a.score - b.score);
-            const highScores = scores.filter(score => score.score >= 20).sort((a, b) => b.score - a.score);
-            const lowScoresDiv = document.getElementById('lowScores');
-            
-            let analysisContent = '';
-            
-            if (lowScores.length > 0) {
-                analysisContent += `
-                    <div style="margin-bottom: 25px;">
-                        <h3>🎯 ด้านที่ควรให้ความสำคัญเป็นอันดับแรก</h3>
-                        <p>ด้านต่อไปนี้ได้คะแนนต่ำกว่า 15 คะแนน ควรวางแผนพัฒนาเป็นลำดับแรก:</p>
-                        <ul style="margin: 10px 0; padding-left: 20px;">
-                            ${lowScores.map(score => `<li><strong>${score.name}:</strong> ${score.score}/25 คะแนน</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-            }
-            
-            if (highScores.length > 0) {
-                analysisContent += `
-                    <div style="margin-bottom: 25px;">
-                        <h3>⭐ จุดแข็งของคุณ</h3>
-                        <p>ด้านที่คุณทำได้ดีมาก (20+ คะแนน) ควรรักษาและใช้เป็นแรงบันดาลใจ:</p>
-                        <ul style="margin: 10px 0; padding-left: 20px;">
-                            ${highScores.map(score => `<li><strong>${score.name}:</strong> ${score.score}/25 คะแนน</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
-            }
-            
-            if (lowScores.length === 0 && highScores.length === 0) {
-                analysisContent = `
-                    <h3>✨ การวิเคราะห์เพิ่มเติม</h3>
-                    <p>คุณมีการพัฒนาที่สมดุลในทุกด้าน ไม่มีด้านใดที่ต่ำเกินไปหรือสูงเกินไป แสดงถึงการใช้ชีวิตที่มีความสมดุลดี</p>
-                `;
-            }
-            
-            // Add recommendations based on score range
-            if (averageScore < 11) {
-                analysisContent += `
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(244, 67, 54, 0.1); border-radius: 8px; border-left: 4px solid #F44336;">
-                        <h4>💡 คำแนะนำการพัฒนา:</h4>
-                        <p>• เริ่มต้นจากการเลือก 1-2 ด้านที่ได้คะแนนต่ำสุด</p>
-                        <p>• วางเป้าหมายเล็ก ๆ ที่ทำได้จริงในระยะสั้น</p>
-                        <p>• หาที่ปรึกษาหรือแหล่งสนับสนุนในการพัฒนา</p>
-                        <p>• ประเมินความก้าวหน้าทุก 1-2 เดือน</p>
-                    </div>
-                `;
-            } else if (averageScore < 18) {
-                analysisContent += `
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.1); border-radius: 8px; border-left: 4px solid #FF9800;">
-                        <h4>💡 คำแนะนำการพัฒนา:</h4>
-                        <p>• ต่อยอดจุดแข็งที่มีอยู่ให้เข้มแข็งยิ่งขึ้น</p>
-                        <p>• พัฒนาด้านที่อ่อนแอที่สุด 2-3 ด้าน</p>
-                        <p>• สร้างระบบและนิสัยใหม่ที่สนับสนุนการเติบโต</p>
-                        <p>• แบ่งปันประสบการณ์และเรียนรู้จากผู้อื่น</p>
-                    </div>
-                `;
-            } else {
-                analysisContent += `
-                    <div style="margin-top: 20px; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; border-left: 4px solid #4CAF50;">
-                        <h4>💡 คำแนะนำการพัฒนา:</h4>
-                        <p>• คงไว้ซึ่งสิ่งดี ๆ ที่มีอยู่และพัฒนาให้ยั่งยืน</p>
-                        <p>• ยกระดับด้านที่ยังไม่ถึงจุดสูงสุด</p>
-                        <p>• เป็นแรงบันดาลใจและแบ่งปันประสบการณ์ให้ผู้อื่น</p>
-                        <p>• ตั้งเป้าหมายใหม่ที่ท้าทายมากขึ้น</p>
-                    </div>
-                `;
-            }
-
-            lowScoresDiv.innerHTML = analysisContent;
-
-            // Scroll to results
-            document.getElementById('results').scrollIntoView({behavior: 'smooth'});
-        }
-
-        // สร้าง Radar Chart
-        function createRadarChart(scores) {
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            
-            // ทำลาย chart เก่าก่อน (ถ้ามี)
-            if (window.radarChartInstance) {
-                window.radarChartInstance.destroy();
-            }
-
-            // สร้างข้อมูลสำหรับ chart โดยเรียงตามลำดับที่เหมาะสม
-            const orderedSections = [
-                'สุขภาพกายและสุขภาพใจ',
-                'ชีวิตทางปัญญา', 
-                'ชีวิตด้านอารมณ์',
-                'คุณลักษณะนิสัยและค่านิยม',
-                'จิตวิญญาณและความหมายของชีวิต',
-                'ความรักและความสัมพันธ์คู่ชีวิต',
-                'บทบาทความเป็นพ่อแม่',
-                'ชีวิตด้านสังคมและมิตรภาพ',
-                'ชีวิตด้านการเงินและความมั่งคั่ง',
-                'ชีวิตด้านอาชีพและความสำเร็จในงาน',
-                'คุณภาพชีวิต',
-                'วิสัยทัศน์ชีวิตโดยรวม'
-            ];
-
-            const labels = [];
-            const data = [];
-            const backgroundColors = [];
-            
-            // สร้างข้อมูลตามลำดับที่กำหนด
-            orderedSections.forEach(sectionName => {
-                const score = scores.find(s => s.name === sectionName);
-                if (score) {
-                    labels.push(sectionName);
-                    data.push(score.score);
-                    
-                    // กำหนดสีตามคะแนน
-                    if (score.score >= 23) backgroundColors.push('rgba(76, 175, 80, 0.6)'); // เขียว - ดีเยี่ยม
-                    else if (score.score >= 18) backgroundColors.push('rgba(139, 195, 74, 0.6)'); // เขียวอ่อน - ดี
-                    else if (score.score >= 11) backgroundColors.push('rgba(255, 152, 0, 0.6)'); // ส้ม - ปานกลาง
-                    else backgroundColors.push('rgba(244, 67, 54, 0.6)'); // แดง - ต้องปรับปรุง
-                }
-            });
-            
-            window.radarChartInstance = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'คะแนนของคุณ',
-                        data: data,
-                        borderColor: 'rgba(102, 126, 234, 1)',
-                        backgroundColor: 'rgba(102, 126, 234, 0.25)',
-                        borderWidth: 3,
-                        pointBackgroundColor: backgroundColors,
-                        pointBorderColor: 'rgba(102, 126, 234, 1)',
-                        pointBorderWidth: 2,
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(102, 126, 234, 1)',
-                        pointRadius: 8,
-                        pointHoverRadius: 10,
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: '#333',
-                                font: {
-                                    size: 16,
-                                    weight: 'bold'
-                                },
-                                padding: 20
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0,0,0,0.8)',
-                            titleColor: '#fff',
-                            bodyColor: '#fff',
-                            cornerRadius: 8,
-                            displayColors: true,
-                            callbacks: {
-                                label: function(context) {
-                                    const score = context.parsed.r;
-                                    let level = '';
-                                    if (score >= 23) level = 'ยอดเยี่ยม';
-                                    else if (score >= 18) level = 'ดี';
-                                    else if (score >= 11) level = 'ปานกลาง';
-                                    else level = 'ต้องปรับปรุง';
-                                    
-                                    return `${context.label}: ${score}/25 คะแนน (${level})`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        r: {
-                            angleLines: {
-                                color: 'rgba(0, 0, 0, 0.15)',
-                                lineWidth: 1
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.1)',
-                                lineWidth: 1
-                            },
-                            pointLabels: {
-                                color: '#333',
-                                font: {
-                                    size: 12,
-                                    weight: '600'
-                                },
-                                callback: function(label) {
-                                    // ย่อชื่อถ้ายาวเกินไป
-                                    return label.length > 25 ? label.substring(0, 22) + '...' : label;
-                                }
-                            },
-                            ticks: {
-                                display: true,
-                                color: '#666',
-                                backdropColor: 'rgba(255, 255, 255, 0.9)',
-                                backdropPadding: 4,
-                                font: {
-                                    size: 11,
-                                    weight: '500'
-                                },
-                                stepSize: 5,
-                                callback: function(value) {
-                                    return value + 'pts';
-                                }
-                            },
-                            min: 0,
-                            max: 25,
-                            beginAtZero: true
-                        }
-                    },
-                    interaction: {
-                        intersect: false,
-                        mode: 'nearest'
-                    },
-                    animation: {
-                        duration: 1500,
-                        easing: 'easeInOutQuart'
-                    }
-                }
-            });
-        }
-
-        // ดาวน์โหลดกราฟเป็นรูปภาพ
-        function downloadChartImage() {
-            if (!window.radarChartInstance) {
-                alert('ไม่พบกราฟที่จะดาวน์โหลด');
-                return;
-            }
-
-            const canvas = document.getElementById('radarChart');
-            const link = document.createElement('a');
-            link.download = `wheel-of-life-chart-${new Date().toISOString().split('T')[0]}.png`;
-            link.href = canvas.toDataURL('image/png', 1.0);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // ดาวน์โหลด PDF พร้อมกราหรายละเอียด
-        function downloadDetailedPDF() {
-            if (!currentResults || !window.radarChartInstance) {
-                alert('ไม่พบข้อมูลหรือกราฟที่จะดาวน์โหลด');
-                return;
-            }
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // การตั้งค่าสำหรับภาษาไทย (ใช้ฟอนต์ที่รองรับ)
-            doc.setFont("helvetica");
-            
-            // หัวเรื่อง
-            doc.setFontSize(22);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Wheel of Life Assessment Results', 105, 25, { align: 'center' });
-            
-            // เส้นใต้หัวเรื่อง
-            doc.setDrawColor(102, 126, 234);
-            doc.setLineWidth(1);
-            doc.line(20, 30, 190, 30);
-            
-            // ข้อมูลพื้นฐาน
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            let yPos = 45;
-            
-            const assessmentDate = new Date(currentResults.timestamp).toLocaleDateString('th-TH', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            doc.text(`Assessment Date: ${assessmentDate}`, 20, yPos);
-            yPos += 8;
-            doc.text(`Overall Average Score: ${currentResults.averageScore.toFixed(1)}/25 points`, 20, yPos);
-            yPos += 8;
-            doc.text(`Sections Completed: ${currentResults.validSectionCount}/12 sections`, 20, yPos);
-            yPos += 8;
-            doc.text(`Total Score: ${currentResults.scores.reduce((sum, score) => sum + score.score, 0)}/300 points`, 20, yPos);
-            yPos += 20;
-
-            // กรอบสรุปผล
-            doc.setFillColor(240, 248, 255);
-            doc.rect(15, yPos - 5, 180, 25, 'F');
-            doc.setDrawColor(102, 126, 234);
-            doc.rect(15, yPos - 5, 180, 25);
-            
-            // ผลการประเมิน
-            doc.setFontSize(14);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Assessment Summary:', 20, yPos + 5);
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            
-            let summaryText = '';
-            if (currentResults.averageScore >= 23) {
-                summaryText = 'Excellent! Outstanding quality of life across multiple dimensions.';
-            } else if (currentResults.averageScore >= 18) {
-                summaryText = 'Very Good! High quality of life with room for further improvement.';
-            } else if (currentResults.averageScore >= 11) {
-                summaryText = 'Moderate. Some strengths with several areas needing development.';
-            } else {
-                summaryText = 'Needs Improvement. Priority focus required on life quality enhancement.';
-            }
-            
-            doc.text(summaryText, 20, yPos + 15, { maxWidth: 170 });
-            yPos += 35;
-
-            // เพิ่มกราฟ Radar Chart
-            if (window.radarChartInstance) {
-                doc.setFontSize(16);
-                doc.setTextColor(102, 126, 234);
-                doc.text('Wheel of Life - Balance Chart', 105, yPos, { align: 'center' });
-                yPos += 10;
-                
-                const canvas = document.getElementById('radarChart');
-                const chartImageData = canvas.toDataURL('image/png', 1.0);
-                
-                // เพิ่มรูปภาพของกราฟ
-                const imgWidth = 140;
-                const imgHeight = 100;
-                const imgX = (210 - imgWidth) / 2; // จัดกึ่งกลาง
-                
-                doc.addImage(chartImageData, 'PNG', imgX, yPos, imgWidth, imgHeight);
-                yPos += imgHeight + 15;
-            }
-
-            // ขึ้นหน้าใหม่สำหรับคะแนนรายละเอียด
-            doc.addPage();
-            yPos = 30;
-
-            // คะแนนรายละเอียดแต่ละด้าน
-            doc.setFontSize(18);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Detailed Scores by Dimension', 105, yPos, { align: 'center' });
-            yPos += 20;
-            
-            // เรียงคะแนนจากสูงไปต่ำ
-            const sortedScores = [...currentResults.scores].sort((a, b) => b.score - a.score);
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            
-            sortedScores.forEach((score, index) => {
-                // กำหนดสีตามคะแนน
-                let color = [0, 0, 0]; // ดำ (default)
-                let level = '';
-                if (score.score >= 23) {
-                    color = [76, 175, 80]; // เขียว
-                    level = 'Excellent';
-                } else if (score.score >= 18) {
-                    color = [139, 195, 74]; // เขียวอ่อน
-                    level = 'Good';
-                } else if (score.score >= 11) {
-                    color = [255, 152, 0]; // ส้ม
-                    level = 'Moderate';
-                } else {
-                    color = [244, 67, 54]; // แดง
-                    level = 'Needs Improvement';
-                }
-                
-                // วาดกรอบสำหรับแต่ละรายการ
-                if (index % 2 === 0) {
-                    doc.setFillColor(248, 249, 250);
-                    doc.rect(15, yPos - 3, 180, 12, 'F');
-                }
-                
-                doc.setTextColor(0, 0, 0);
-                doc.text(`${index + 1}.`, 20, yPos + 3);
-                
-                // ชื่อด้าน (ย่อถ้ายาวเกินไป)
-                const dimensionName = score.name.length > 35 ? score.name.substring(0, 32) + '...' : score.name;
-                doc.text(dimensionName, 30, yPos + 3);
-                
-                // คะแนนและระดับ
-                doc.setTextColor(...color);
-                doc.setFont("helvetica", "bold");
-                doc.text(`${score.score}/25`, 150, yPos + 3);
-                doc.setFont("helvetica", "normal");
-                doc.text(`(${level})`, 168, yPos + 3);
-                
-                yPos += 12;
-                
-                // ขึ้นหน้าใหม่ถ้าเต็ม
-                if (yPos > 260) {
-                    doc.addPage();
-                    yPos = 30;
-                }
-            });
-
-            // เพิ่มหน้าสำหรับคำแนะนำ
-            doc.addPage();
-            yPos = 30;
-            
-            doc.setFontSize(18);
-            doc.setTextColor(102, 126, 234);
-            doc.text('Recommendations & Action Steps', 105, yPos, { align: 'center' });
-            yPos += 20;
-
-            // จุดแข็ง
-            const highScores = currentResults.scores.filter(score => score.score >= 20);
-            if (highScores.length > 0) {
-                doc.setFontSize(14);
-                doc.setTextColor(76, 175, 80);
-                doc.text('Your Strengths:', 20, yPos);
-                yPos += 10;
-                
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-                highScores.forEach(score => {
-                    doc.text(`• ${score.name}: ${score.score}/25 points`, 25, yPos);
-                    yPos += 8;
-                });
-                yPos += 10;
-            }
-
-            // ด้านที่ต้องพัฒนา
-            const lowScores = currentResults.scores.filter(score => score.score < 15);
-            if (lowScores.length > 0) {
-                doc.setFontSize(14);
-                doc.setTextColor(244, 67, 54);
-                doc.text('Priority Areas for Development:', 20, yPos);
-                yPos += 10;
-                
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-                lowScores.forEach(score => {
-                    doc.text(`• ${score.name}: ${score.score}/25 points`, 25, yPos);
-                    yPos += 8;
-                });
-                yPos += 10;
-            }
-
-            // คำแนะนำทั่วไป
-            doc.setFontSize(14);
-            doc.setTextColor(102, 126, 234);
-            doc.text('General Recommendations:', 20, yPos);
-            yPos += 15;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            
-            const recommendations = [
-                'Focus on 1-2 lowest scoring areas for immediate improvement',
-                'Set specific, measurable goals for each priority area',
-                'Create daily habits that support your development goals',
-                'Seek support from mentors, coaches, or trusted advisors',
-                'Track your progress monthly and adjust strategies as needed',
-                'Celebrate small wins to maintain motivation',
-                'Consider professional help for areas requiring specialized support'
-            ];
-            
-            recommendations.forEach(rec => {
-                doc.text(`• ${rec}`, 25, yPos, { maxWidth: 160 });
-                yPos += 12;
-                
-                if (yPos > 260) {
-                    doc.addPage();
-                    yPos = 30;
-                }
-            });
-
-            // Footer ในทุกหน้า
-            const pageCount = doc.internal.getNumberOfPages();
-            for (let i = 1; i <= pageCount; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
-                doc.setTextColor(128, 128, 128);
-                doc.text(`Wheel of Life Assessment Report - Page ${i} of ${pageCount}`, 105, 290, { align: 'center' });
-                doc.text(`Generated on ${new Date().toLocaleDateString('en-US')}`, 105, 295, { align: 'center' });
-            }
-            
-            // บันทึกไฟล์
-            doc.save(`wheel-of-life-detailed-report-${new Date().toISOString().split('T')[0]}.pdf`);
-        }
-
-        // ดาวน์โหลดข้อมูลเป็น JSON
-        function downloadJSON() {
-            if (!currentResults) {
-                alert('ไม่พบข้อมูลที่จะดาวน์โหลด');
-                return;
-            }
-
-            const dataStr = JSON.stringify(currentResults, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = `wheel-of-life-results-${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // ดาวน์โหลดเป็น PDF
-        function downloadPDF() {
-            if (!currentResults) {
-                alert('ไม่พบข้อมูลที่จะดาวน์โหลด');
-                return;
-            }
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // ตั้งค่าฟอนต์ (ใช้ฟอนต์พื้นฐานที่ไม่ต้องการ Thai font)
-            doc.setFontSize(20);
-            doc.text('Wheel of Life Assessment Results', 20, 30);
-            
-            doc.setFontSize(14);
-            let yPosition = 50;
-            
-            // ข้อมูลพื้นฐาน
-            doc.text(`Date: ${new Date(currentResults.timestamp).toLocaleDateString('th-TH')}`, 20, yPosition);
-            yPosition += 10;
-            doc.text(`Average Score: ${currentResults.averageScore.toFixed(1)}/25`, 20, yPosition);
-            yPosition += 10;
-            doc.text(`Sections Completed: ${currentResults.validSectionCount}/12`, 20, yPosition);
-            yPosition += 20;
-            
-            // คะแนนแต่ละด้าน
-            doc.setFontSize(16);
-            doc.text('Detailed Scores:', 20, yPosition);
-            yPosition += 15;
-            
-            doc.setFontSize(12);
-            currentResults.scores.forEach((score, index) => {
-                doc.text(`${index + 1}. ${score.name}: ${score.score}/25`, 25, yPosition);
-                yPosition += 8;
-                
-                // ขึ้นหน้าใหม่ถ้าเต็ม
-                if (yPosition > 270) {
-                    doc.addPage();
-                    yPosition = 30;
-                }
-            });
-            
-            // บันทึกไฟล์
-            doc.save(`wheel-of-life-summary-${new Date().toISOString().split('T')[0]}.pdf`);
-        }
-
-        // พิมพ์ผลลัพธ์
-        function printResults() {
-            window.print();
-        }
-    </script>
-</body>
-</html>
+                            <label class="option"><input type="radio" name="vision_3
