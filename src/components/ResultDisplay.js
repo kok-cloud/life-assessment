@@ -170,7 +170,7 @@ function ResultDisplay({ answers = {}, email }) {
       setSending(true);
       setSendResult(null);
       try {
-        const res = await fetch('https://backend-8tpc.onrender.com/send-pdf', {
+        const res = await fetch('https://life-assessment-api.onrender.com/send-pdf', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -191,7 +191,7 @@ function ResultDisplay({ answers = {}, email }) {
 
     const sendToGoogleSheet = async () => {
       try {
-        await fetch('https://script.google.com/macros/s/AKfycbx9uzHWhlLah-0be-1a09S_Ozg79k8CB0dimyxJc6g1eYPR916cWmqz_rBC8wvf8HIY/exec', {
+        await fetch('https://script.google.com/macros/s/AKfycbxAmbBHRgUzuCLe7x-R1QALOOUtB5lzIO3RAu91wJQvzpA61M3PGmVbAS7C0OLFYuX1/exec', {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
